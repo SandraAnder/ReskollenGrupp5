@@ -28,15 +28,32 @@ class TripPlanner:
 
     def __init__(self, origin_id, destination_id) -> None:
 
-        self.trips = resrobot.trips(origin_id, destination_id).get("Trip")
-        self.number_trips = len(self.trips)
+        response = resrobot.trips(origin_id, destination_id)
+        if response and "Trip" in response:
+            self.trips = response["Trip"]
+            self.number_trips = len(self.trips)
+        else:
+            print("Inga resor hittades.")
+            self.trips = []
+            self.number_trips = 0
 
     def next_available_trip(self) -> pd.DataFrame:
+        if not self.trips:
+            print("Inga tillgängliga resor.")
+            return pd.DataFrame()
+
         next_trip = self.trips[0]
 
-        leglist = next_trip.get("LegList").get("Leg")
+        leglist = next_trip.get("LegList", {}).get("Leg", [])
+        if not leglist:
+            print("Inga steg i resan.")
+            return pd.DataFrame()
 
         df_legs = pd.DataFrame(leglist)
+
+        if "Stops" not in df_legs or df_legs["Stops"].isnull().all():
+            print("Inga hållplatser hittades.")
+            return pd.DataFrame()
 
         df_stops = pd.json_normalize(
             df_legs["Stops"].dropna(), "Stop", errors="ignore")
@@ -63,11 +80,9 @@ class TripPlanner:
         """Fetches all available trips today between the origin_id and destination_id
         It returns a list of DataFrame objects, where each item corresponds to a trip
         """
-        # TODO: implement this method
+        return []
 
 
 if __name__ == "__main__":
-    data = TripData(
-        740000190,
-    )
+    data = TripPlanner(740000190, 740000001)
     print(data.next_available_trip()[["arrTime", "depTime", "time", "date"]])
