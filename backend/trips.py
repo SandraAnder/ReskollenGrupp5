@@ -243,4 +243,4 @@ class StopPlanner():
 
 if __name__ == "__main__":
     TripPlanner(740000190, 740000001)
-    StopPlanner("")
+    StopPlanner()
