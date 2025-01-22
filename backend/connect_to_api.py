@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 import os
 import requests
 from pprint import pprint
+import re
+import pandas as pd
 
 load_dotenv()
 
@@ -36,20 +38,34 @@ class ResRobot:
             if stop_data.get("extId"):
                 print(f"{stop_data['name']:<50} {stop_data['extId']}")
 
-    def timetable_departure(self, location_id=740015565):
-        url = f"https://api.resrobot.se/v2.1/departureBoard?id={location_id}&format=json&accessId={self.API_KEY}"
-        response = requests.get(url)
-        result = response.json()
-        return result
+    # Filter stops on arrival and departure v
 
-    def timetable_arrival(self, location_id=740015565):
-        url = f"https://api.resrobot.se/v2.1/arrivalBoard?id={location_id}&format=json&accessId={self.API_KEY}"
-        response = requests.get(url)
-        result = response.json()
-        return result
+    # Function to extract the stopname
+    def get_stop_name(self, location):
+        url_stopName = f"https://api.resrobot.se/v2.1/location.name?input={location}&format=json&accessId={self.API_KEY}"
+
+        result_name = requests.get(url_stopName)
+        return result_name.json().get("stopLocationOrCoordLocation")
+
+    def get_departures(self, location_ids, max_results=8):
+        url_departures = f"https://api.resrobot.se/v2.1/departureBoard?id={location_ids}&format=json&maxJourneys={max_results}&accessId={self.API_KEY}"
+
+        response = requests.get(url_departures)
+        data = response.json()
+        departures = data.get("Departure", [])
+
+        return departures[:max_results]
+
+    def get_arrivials(self, location_ids, max_results=8):
+        url_arrivals = f"https://api.resrobot.se/v2.1/arrivalBoard?id={location_ids}&format=json&maxJourneys={max_results}&accessId={self.API_KEY}"
+        response = requests.get(url_arrivals)
+
+        data_arrivals = response.json()
+        arrivals = data_arrivals.get("Arrival", [])
+        return arrivals[:max_results]
+
+    # Filter stops on arrival and departure ^
 
 
 if __name__ == "__main__":
     resrobot = ResRobot()
-
-    pprint(resrobot.timetable_arrival()["Arrival"][0])

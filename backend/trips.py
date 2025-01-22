@@ -1,5 +1,6 @@
 from backend.connect_to_api import ResRobot
 import pandas as pd
+import re
 
 resrobot = ResRobot()
 
@@ -28,15 +29,32 @@ class TripPlanner:
 
     def __init__(self, origin_id, destination_id) -> None:
 
-        self.trips = resrobot.trips(origin_id, destination_id).get("Trip")
-        self.number_trips = len(self.trips)
+        response = resrobot.trips(origin_id, destination_id)
+        if response and "Trip" in response:
+            self.trips = response["Trip"]
+            self.number_trips = len(self.trips)
+        else:
+            print("Inga resor hittades.")
+            self.trips = []
+            self.number_trips = 0
 
     def next_available_trip(self) -> pd.DataFrame:
+        if not self.trips:
+            print("Inga tillgängliga resor.")
+            return pd.DataFrame()
+
         next_trip = self.trips[0]
 
-        leglist = next_trip.get("LegList").get("Leg")
+        leglist = next_trip.get("LegList", {}).get("Leg", [])
+        if not leglist:
+            print("Inga steg i resan.")
+            return pd.DataFrame()
 
         df_legs = pd.DataFrame(leglist)
+
+        if "Stops" not in df_legs or df_legs["Stops"].isnull().all():
+            print("Inga hållplatser hittades.")
+            return pd.DataFrame()
 
         df_stops = pd.json_normalize(
             df_legs["Stops"].dropna(), "Stop", errors="ignore")
@@ -63,11 +81,80 @@ class TripPlanner:
         """Fetches all available trips today between the origin_id and destination_id
         It returns a list of DataFrame objects, where each item corresponds to a trip
         """
-        # TODO: implement this method
+        return []
+
+
+class StopPlanner():
+
+    def __init__(self, station) -> None:
+        self.station = station
+
+        # Filter stops on arrival and departure v
+
+    def get_timetable_dep(self, station):
+        if station:
+            station_name = station[0]["StopLocation"]["name"]
+            station_id_raw = station[0]["StopLocation"]["id"]
+
+            match = re.search(r"L=(\d+)", station_id_raw)
+            if match:
+                station_id = match.group(1)
+            else:
+                print("Kunde inte extrahera stationens ID.")
+                station_id = None
+            print(f"Stationens namn: {station_name}")
+            print(f"Stations id: {station_id}")
+
+            departures = resrobot.get_departures(station_id, max_results=8)
+
+            if departures:
+                dep_data = []
+                for departure in departures:
+                    transport = departure.get('ProductAtStop', {}).get(
+                        'displayNumber', 'Okänt fordon')
+                    dep_data.append(
+                        {"Tid": departure['time'], "Destination": departure['direction'], "Linje": transport})
+                return pd.DataFrame(dep_data)
+            else:
+                print("Inga avgångar")
+                return pd.DataFrame()
+        else:
+            print("Stationen hittades inte")
+            return pd.DataFrame()
+
+    def get_timetable_arr(self, station):
+        if station:
+            station_name = station[0]["StopLocation"]["name"]
+            station_id_raw = station[0]["StopLocation"]["id"]
+
+            match = re.search(r"L=(\d+)", station_id_raw)
+            if match:
+                station_id = match.group(1)
+            else:
+                print("Kunde inte extrahera stationens ID.")
+                station_id = None
+            print(f"Stationens namn: {station_name}")
+            print(f"Stations id: {station_id}")
+
+            arrivals = resrobot.get_arrivials(station_id, max_results=8)
+
+            if arrivals:
+                arr_data = []
+                for arrival in arrivals:
+                    transport = arrival.get('ProductAtStop', {}).get(
+                        'displayNumber', 'Okänt fordon')
+                    arr_data.append({
+                        "Tid": arrival['time'], "Origin": arrival['origin'], "Linje": transport})
+                return pd.DataFrame(arr_data)
+            else:
+                print("Inga avgångar")
+                return pd.DataFrame()
+        else:
+            print("Stationen hittades inte")
+            return pd.DataFrame()
+    # Filter stops on arrival and departure ^
 
 
 if __name__ == "__main__":
-    data = TripData(
-        740000190,
-    )
-    print(data.next_available_trip()[["arrTime", "depTime", "time", "date"]])
+    TripPlanner(740000190, 740000001)
+    StopPlanner()
