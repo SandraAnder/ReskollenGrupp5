@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     /*modular scale*/
     --ratio: 1.5;
@@ -15,13 +17,21 @@
 
     /*CSS variables*/
     --primaryColor: #013151;
-    --backgroundColor: #f3ffec;
-    --backgroundColorsecondary: #f3ffec;
+    --backgroundColor: #ecf6ff;
+    --backgroundColorsecondary: #ecf6ff;
 
     --headingColor: #013151; /* Färg för rubriker */
     --paragraphColor: #414141; /* Färg för brödtext */
     --textColor: #323232;
     --sidebarColor: #8aa77b;
+}
+
+.block-container {
+    background-color: var(--backgroundColor);
+}
+header.stAppHeader {
+    background-color: var(--backgroundColor) !important;
+    color: #000000 !important;
 }
 
 /* lobotomized owl - 
@@ -34,9 +44,9 @@ body * + * {
 /* finds selector on attribute level */
 [data-testid|="stheader"]{
     display: box;
-    fill: #013151; /* Ändra till den färg du vill använda */
+    fill: #013151; 
     color: #013151; 
-    opacity: 1; /* Se till att ikonen är fullt synlig */
+    opacity: 1; /* Ser till att ikonen är helt synlig */
 
 }
 
@@ -52,30 +62,30 @@ p {
 }
 
 h1 {
-    font-size: calc(var(--s3) * 1.2); /* Öka storleken på huvudrubriken */
+    font-size: calc(var(--s3) * 1.2); /* Ökar storleken på huvudrubriken */
     color: var(--primaryColor);
-    margin-top: 1rem; /* Justera marginalen ovanför rubriken */
-    margin-bottom: 1rem; /* Justera marginalen under rubriken */
-    text-align: center; /* Centrera rubriken */
-    padding: 0.5rem 1rem; /* Lägg till lite utrymme runt rubriken */
+    margin-top: 1rem; /* Justerar marginalen ovanför rubriken */
+    margin-bottom: 1rem; /* Justerar marginalen under rubriken */
+    text-align: center; /* Centrerar rubriken */
+    padding: 0.5rem 1rem; /* Lägger till lite utrymme runt rubriken */
     background-color: rgba(60, 116, 68, 0.05); /* Subtil bakgrundsfärg (justerbar) */
     border-radius: 8px; /* Gör hörnen rundade */
-    box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägg till en subtil skugga */
+    box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägger till en subtil skugga */
 }
 
 h2 {
-    font-size: var(--s2); /* Öka storleken för underrubriken */
-    color: var(--headingColor); /* Använd headingColor för underrubriken */
-    margin-top: 0.5rem; /* Justera marginalen ovanför underrubriken */
-    margin-bottom: 0.5rem; /* Justera marginalen under underrubriken */
-    /*text-align: center;  Centrera underrubriken */
+    font-size: var(--s2); /* Ökar storleken för underrubriken */
+    color: var(--headingColor); /* Använder headingColor för underrubriken */
+    margin-top: 0.5rem; /* Justerar marginalen ovanför underrubriken */
+    margin-bottom: 0.5rem; /* Justerar marginalen under underrubriken */
+    /*text-align: center;  Centrerar underrubriken */
 }
 h1 + p {
     font-size: var(--s1); /* Gör beskrivningstexten större */
-    color: var(--paragraphColor); /* Använd färgen för paragraftext */
-    text-align: center; /* Centrera beskrivningen */
-    margin-top: 0; /* Justera marginalen ovanför beskrivningen */
-    margin-bottom: 1rem; /* Justera marginalen under beskrivningen */
+    color: var(--paragraphColor); /* Använder färgen för paragraftext */
+    text-align: center; /* Centrerar beskrivningen */
+    margin-top: 0; /* Justerar marginalen ovanför beskrivningen */
+    margin-bottom: 1rem; /* Justerar marginalen under beskrivningen */
 }
 
 h3 {
@@ -84,9 +94,8 @@ h3 {
 }
 
 /* . to use class selector */
-
 .stAppViewBlockContainer {
-    background-image: linear-gradient(to bottom right, rgb(227, 255, 221) , rgb(213, 213, 252));
+    background-image: linear-gradient(to bottom right, rgb(221, 240, 255) , rgb(184, 184, 255));
     padding-top: var(--s1);
     padding-left: var(--s3);
     padding-right: var(--s3);
@@ -117,11 +126,61 @@ div[data-baseweb="select"] > div > div {
 /* Ändrar utseendet när selectboxen är i fokus */
 div[data-baseweb="select"]:focus-within {
     outline: none;
-    border: 1px solid #009688; /* Ändrar färg för kantlinjen vid fokus */
-    box-shadow: 0 0 5px #009688; /* En liten skuggeffekt vid fokus */
+    border: 1px solid #004088; /* Ändrar färg för kantlinjen vid fokus */
+    box-shadow: 0 0 5px #004088; /* En liten skuggeffekt vid fokus */
     height: auto; /* anpassar sig till höjden*/
     max-width: 300px;
     width: auto;
+}
+
+/* Styling för textinput */
+div[data-testid="stTextInput"] {
+    background-color: #ffffff;
+    color: #013151; /* Textfärg */
+    border: 2px solid #7871af;
+    border-radius: 7px; /* Rundade hörn */
+    padding: 5px; /* Ger tillräcklig inre marginal */
+    font-family: "Noto Sans", sans-serif; /* Konsekvent font */
+    font-size: 16px; /* Konsekvent textstorlek */
+    max-width: 300px; /* Samma som selectbox */
+    width: auto; /* Anpassar sig till innehållet */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtil skugga */
+}
+
+/* Fokus-effekt */
+div[data-testid="stTextInput"]:focus-within {
+    border: 2px solid #004088; /* Samma fokusfärg som selectbox */
+    box-shadow: 0 0 5px #004088; /* Ljusare skugga vid fokus */
+}
+
+/* Stylar tabellerna*/
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    font-family: sans-serif;
+    width: 100%;
+    border: 1px solid #dddddd;
+}
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+.styled-table thead th {
+    background-color: #5c51ab; /* Justera till en ljusare färg om nödvändigt */
+    color: #ffffff; /* Gör texten vit */
+    font-size: 1.1em; /* Gör texten lite större */
+    font-weight: bold; /* Lägg till fetstil för tydlighet */
+    text-align: left;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
 
 
