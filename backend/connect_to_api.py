@@ -56,37 +56,6 @@ class ResRobot:
 
         return departures[:max_results]
 
-    def get_timetable_dep(self, station):
-        if station:
-            station_name = station[0]["StopLocation"]["name"]
-            station_id_raw = station[0]["StopLocation"]["id"]
-
-            match = re.search(r"L=(\d+)", station_id_raw)
-            if match:
-                station_id = match.group(1)
-            else:
-                print("Kunde inte extrahera stationens ID.")
-                station_id = None
-            print(f"Stationens namn: {station_name}")
-            print(f"Stations id: {station_id}")
-
-            departures = self.get_departures(station_id, max_results=8)
-
-            if departures:
-                dep_data = []
-                for departure in departures:
-                    transport = departure.get('ProductAtStop', {}).get(
-                        'displayNumber', 'Okänt fordon')
-                    dep_data.append(
-                        {"Tid": departure['time'], "Destination": departure['direction'], "Linje": transport})
-                return pd.DataFrame(dep_data)
-            else:
-                print("Inga avgångar")
-                return pd.DataFrame()
-        else:
-            print("Stationen hittades inte")
-            return pd.DataFrame()
-
     def get_arrivials(self, location_ids, max_results=8):
         url_arrivals = f"https://api.resrobot.se/v2.1/arrivalBoard?id={location_ids}&format=json&maxJourneys={max_results}&accessId={self.API_KEY}"
         response = requests.get(url_arrivals)
@@ -95,41 +64,8 @@ class ResRobot:
         arrivals = data_arrivals.get("Arrival", [])
         return arrivals[:max_results]
 
-    def get_timetable_arr(self, station):
-        if station:
-            station_name = station[0]["StopLocation"]["name"]
-            station_id_raw = station[0]["StopLocation"]["id"]
-
-            match = re.search(r"L=(\d+)", station_id_raw)
-            if match:
-                station_id = match.group(1)
-            else:
-                print("Kunde inte extrahera stationens ID.")
-                station_id = None
-            print(f"Stationens namn: {station_name}")
-            print(f"Stations id: {station_id}")
-
-            arrivals = self.get_arrivials(station_id, max_results=8)
-
-            if arrivals:
-                arr_data = []
-                for arrival in arrivals:
-                    transport = arrival.get('ProductAtStop', {}).get(
-                        'displayNumber', 'Okänt fordon')
-                    arr_data.append({
-                        "Tid": arrival['time'], "Origin": arrival['origin'], "Linje": transport})
-                return pd.DataFrame(arr_data)
-            else:
-                print("Inga avgångar")
-                return pd.DataFrame()
-        else:
-            print("Stationen hittades inte")
-            return pd.DataFrame()
-
     # Filter stops on arrival and departure ^
 
 
 if __name__ == "__main__":
     resrobot = ResRobot()
-    response = resrobot.trips(740000001, 740098001)
-    print(response)

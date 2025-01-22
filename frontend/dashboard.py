@@ -2,11 +2,15 @@ import streamlit as st
 from frontend.plot_maps import TripMap
 from utils.constants import StationIds
 from backend.connect_to_api import ResRobot
+from backend.trips import TripPlanner
+from backend.trips import StopPlanner
 
 trip_map = TripMap(
     origin_id=StationIds.MALMO.value, destination_id=StationIds.UMEA.value
 )
 resrobot = ResRobot()
+
+tripPlanner = StopPlanner("")
 
 
 def main():
@@ -27,7 +31,7 @@ def main():
         if station:
             # Visa departures
             st.subheader(f"Avgångar från {station_name}")
-            departures_df = resrobot.get_timetable_dep(station)
+            departures_df = tripPlanner.get_timetable_dep(station)
             if not departures_df.empty:
                 st.dataframe(departures_df)
             else:
@@ -35,7 +39,7 @@ def main():
 
             # Visa arrivals
             st.subheader(f"Ankomster till {station_name}")
-            arrivals_df = resrobot.get_timetable_arr(station)
+            arrivals_df = tripPlanner.get_timetable_arr(station)
             if not arrivals_df.empty:
                 st.dataframe(arrivals_df)
             else:
