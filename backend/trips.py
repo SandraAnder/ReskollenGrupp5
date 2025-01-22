@@ -1,6 +1,8 @@
 from backend.connect_to_api import ResRobot
 import pandas as pd
 import re
+from datetime import datetime, timedelta
+
 
 resrobot = ResRobot()
 
@@ -119,12 +121,21 @@ class StopPlanner():
                         for product in products:
                             transport_type = product.get("catOutL", "Unknown")
                     
-                    dep_data.append({
-                        "Tid": departure['time'],
-                        "Destination": departure['direction'],
-                        "Linje": transport,
-                        "Typ av transport": transport_type
-                    })
+                            dep_time = datetime.strptime(departure["time"], "%H:%M:%S").time()
+                            current_time = datetime.now().time()
+                            time_until_departure = datetime.combine(datetime.today(), dep_time) - \
+                                           datetime.combine(datetime.today(), current_time)
+                            
+                            if time_until_departure < timedelta(0):
+                                time_until_departure += timedelta(days=1)
+
+                            dep_data.append({
+                                "Tid": departure['time'],
+                                "Destination": departure['direction'],
+                                "Linje": transport,
+                                "Typ av transport": transport_type,
+                                "Tid kvar": str(time_until_departure).split(".")[0],
+                            })
                 return pd.DataFrame(dep_data)
             else:
                 print("Inga avgångar")
@@ -160,12 +171,22 @@ class StopPlanner():
                     if isinstance(products, list):
                         for product in products:
                             transport_type = product.get("catOutL", "Unknown")
-                    arr_data.append({
-                        "Tid": arrival['time'], 
-                        "Origin": arrival['origin'], 
-                        "Linje": transport, 
-                        "Typ av transport": transport_type
-                    })
+
+                            arr_time = datetime.strptime(arrival["time"], "%H:%M:%S").time()
+                            current_time = datetime.now().time()
+                            time_until_arrival = datetime.combine(datetime.today(), arr_time) - \
+                                           datetime.combine(datetime.today(), current_time)
+
+                            if time_until_arrival < timedelta(0):
+                                time_until_arrival += timedelta(days=1)
+
+                            arr_data.append({
+                                "Tid": arrival['time'], 
+                                "Origin": arrival['origin'], 
+                                "Linje": transport, 
+                                "Typ av transport": transport_type,
+                                "Tid kvar": str(time_until_arrival).split(".")[0],
+                            })
                 return pd.DataFrame(arr_data)
             else:
                 print("Inga avgångar")
