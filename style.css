@@ -1,0 +1,127 @@
+:root {
+    /*modular scale*/
+    --ratio: 1.5;
+    --s-5: calc(var(--s-4) / var(--ratio));
+    --s-4: calc(var(--s-3) / var(--ratio));
+    --s-3: calc(var(--s-2) / var(--ratio));
+    --s-2: calc(var(--s-1) / var(--ratio));
+    --s-1: calc(var(--s0) / var(--ratio));
+    --s0: 1rem;
+    --s1: calc(var(--s0) * var(--ratio));
+    --s2: calc(var(--s1) * var(--ratio));
+    --s3: calc(var(--s2) * var(--ratio));
+    --s4: calc(var(--s3) * var(--ratio));
+    --s5: calc(var(--s4) * var(--ratio));
+
+    /*CSS variables*/
+    --primaryColor: #013151;
+    --backgroundColor: #f3ffec;
+    --backgroundColorsecondary: #f3ffec;
+
+    --headingColor: #013151; /* Färg för rubriker */
+    --paragraphColor: #414141; /* Färg för brödtext */
+    --textColor: #323232;
+    --sidebarColor: #8aa77b;
+}
+
+/* lobotomized owl - 
+selector looks for children of body with another sibling */
+body * + * {
+    margin-top: var(0);
+    background-color: var(--backgroundColorsecondary);
+}
+
+/* finds selector on attribute level */
+[data-testid|="stheader"]{
+    display: box;
+    fill: #013151; /* Ändra till den färg du vill använda */
+    color: #013151; 
+    opacity: 1; /* Se till att ikonen är fullt synlig */
+
+}
+
+
+h1, h2, h3 {
+    color: var(--headingColor);
+    font-family: "Noto Sans", sans-serif;
+}
+
+p {
+    color: var(--paragraphColor);
+    font-family: "Noto Sans", sans-serif;
+}
+
+h1 {
+    font-size: calc(var(--s3) * 1.2); /* Öka storleken på huvudrubriken */
+    color: var(--primaryColor);
+    margin-top: 1rem; /* Justera marginalen ovanför rubriken */
+    margin-bottom: 1rem; /* Justera marginalen under rubriken */
+    text-align: center; /* Centrera rubriken */
+    padding: 0.5rem 1rem; /* Lägg till lite utrymme runt rubriken */
+    background-color: rgba(60, 116, 68, 0.05); /* Subtil bakgrundsfärg (justerbar) */
+    border-radius: 8px; /* Gör hörnen rundade */
+    box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägg till en subtil skugga */
+}
+
+h2 {
+    font-size: var(--s2); /* Öka storleken för underrubriken */
+    color: var(--headingColor); /* Använd headingColor för underrubriken */
+    margin-top: 0.5rem; /* Justera marginalen ovanför underrubriken */
+    margin-bottom: 0.5rem; /* Justera marginalen under underrubriken */
+    /*text-align: center;  Centrera underrubriken */
+}
+h1 + p {
+    font-size: var(--s1); /* Gör beskrivningstexten större */
+    color: var(--paragraphColor); /* Använd färgen för paragraftext */
+    text-align: center; /* Centrera beskrivningen */
+    margin-top: 0; /* Justera marginalen ovanför beskrivningen */
+    margin-bottom: 1rem; /* Justera marginalen under beskrivningen */
+}
+
+h3 {
+    font-size: var(--s0);
+    color: var(--paragraphColor);
+}
+
+/* . to use class selector */
+
+.stAppViewBlockContainer {
+    background-image: linear-gradient(to bottom right, rgb(227, 255, 221) , rgb(213, 213, 252));
+    padding-top: var(--s1);
+    padding-left: var(--s3);
+    padding-right: var(--s3);
+    max-width:100%; /* 110 characters bredd, bredden på den 'gröna' main sektionen */ 
+}
+
+/* Ändrar bakgrundsfärg och textfärg på selectboxar */
+div[data-baseweb="select"] > div {
+    background-color: #ffffff; /* Bakgrundsfärg */
+    color: #013151; /* Textfärg */
+    border: 1px solid #003253; /* Kantfärg */
+    padding: 3px;
+    border-radius: 5px; /* Rundade hörn */
+    font-family: "Noto Sans", sans-serif;
+    font-size: 16px;
+    height: auto; /* anpassar sig till höjden*/
+    max-width: 300px;
+    width: auto; 
+    line-height: 1.5; 
+    display: flex; /* centrering av elementet */
+    align-items: center; /* Centrerar texten vertikalt */
+}
+
+div[data-baseweb="select"] > div > div {
+    color: #013151; /* Textfärg i selectboxen */
+}
+
+/* Ändrar utseendet när selectboxen är i fokus */
+div[data-baseweb="select"]:focus-within {
+    outline: none;
+    border: 1px solid #009688; /* Ändrar färg för kantlinjen vid fokus */
+    box-shadow: 0 0 5px #009688; /* En liten skuggeffekt vid fokus */
+    height: auto; /* anpassar sig till höjden*/
+    max-width: 300px;
+    width: auto;
+}
+
+
