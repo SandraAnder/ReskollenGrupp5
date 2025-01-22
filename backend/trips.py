@@ -159,7 +159,7 @@ class StopPlanner():
         if station:
             station_name = station[0]["StopLocation"]["name"]
             station_id_raw = station[0]["StopLocation"]["id"]
-
+    
             match = re.search(r"L=(\d+)", station_id_raw)
             if match:
                 station_id = match.group(1)
@@ -168,16 +168,27 @@ class StopPlanner():
                 station_id = None
             print(f"Stationens namn: {station_name}")
             print(f"Stations id: {station_id}")
-
+    
             departures = resrobot.get_departures(station_id, max_results=8)
-
+    
             if departures:
                 dep_data = []
                 for departure in departures:
                     transport = departure.get('ProductAtStop', {}).get(
                         'displayNumber', 'Okänt fordon')
-                    dep_data.append(
-                        {"Tid": departure['time'], "Destination": departure['direction'], "Linje": transport})
+                    transport_type = "Unknown"
+                    
+                    products = departure.get("Product", [])
+                    if isinstance(products, list):
+                        for product in products:
+                            transport_type = product.get("catOutL", "Unknown")
+                    
+                    dep_data.append({
+                        "Tid": departure['time'],
+                        "Destination": departure['direction'],
+                        "Linje": transport,
+                        "Typ av transport": transport_type
+                    })
                 return pd.DataFrame(dep_data)
             else:
                 print("Inga avgångar")
@@ -186,11 +197,12 @@ class StopPlanner():
             print("Stationen hittades inte")
             return pd.DataFrame()
 
+
     def get_timetable_arr(self, station):
         if station:
             station_name = station[0]["StopLocation"]["name"]
             station_id_raw = station[0]["StopLocation"]["id"]
-
+    
             match = re.search(r"L=(\d+)", station_id_raw)
             if match:
                 station_id = match.group(1)
@@ -199,16 +211,25 @@ class StopPlanner():
                 station_id = None
             print(f"Stationens namn: {station_name}")
             print(f"Stations id: {station_id}")
-
+    
             arrivals = resrobot.get_arrivials(station_id, max_results=8)
-
+    
             if arrivals:
                 arr_data = []
                 for arrival in arrivals:
                     transport = arrival.get('ProductAtStop', {}).get(
                         'displayNumber', 'Okänt fordon')
+                    transport_type = "Unknown"
+                    products = arrival.get("Product", [])
+                    if isinstance(products, list):
+                        for product in products:
+                            transport_type = product.get("catOutL", "Unknown")
                     arr_data.append({
-                        "Tid": arrival['time'], "Origin": arrival['origin'], "Linje": transport})
+                        "Tid": arrival['time'], 
+                        "Origin": arrival['origin'], 
+                        "Linje": transport, 
+                        "Typ av transport": transport_type
+                    })
                 return pd.DataFrame(arr_data)
             else:
                 print("Inga avgångar")
@@ -216,9 +237,10 @@ class StopPlanner():
         else:
             print("Stationen hittades inte")
             return pd.DataFrame()
+    
     # Filter stops on arrival and departure ^
 
 
 if __name__ == "__main__":
     TripPlanner(740000190, 740000001)
-    StopPlanner()
+    StopPlanner("")
