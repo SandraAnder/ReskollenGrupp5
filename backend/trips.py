@@ -133,6 +133,7 @@ class StopPlanner():
                     if isinstance(products, list):
                         for product in products:
                             transport_type = product.get("catOutL", "Unknown")
+<<<<<<< HEAD
 
                             dep_time = datetime.strptime(
                                 departure["time"], "%H:%M:%S").time()
@@ -143,14 +144,32 @@ class StopPlanner():
 
                             if time_until_departure < timedelta(0):
                                 time_until_departure += timedelta(days=1)
+=======
+>>>>>>> 1b3ef66 (FRONTEND-Add-Stylesheet: Fixing merge conflict)
 
-                            dep_data.append({
-                                "Tid": departure['time'],
-                                "Destination": departure['direction'],
-                                "Linje": transport,
-                                "Typ av transport": transport_type,
-                                "Tid kvar": str(time_until_departure).split(".")[0],
-                            })
+                    dep_data.append({
+                        "Tid": departure['time'],
+                        "Destination": departure['direction'],
+                        "Linje": transport,
+                        "Typ av transport": transport_type
+                    })
+
+                    dep_time = datetime.strptime(
+                        departure["time"], "%H:%M:%S").time()
+                     current_time = datetime.now().time()
+                      time_until_departure = datetime.combine(datetime.today(), dep_time) - \
+                           datetime.combine(datetime.today(), current_time)
+
+                       if time_until_departure < timedelta(0):
+                            time_until_departure += timedelta(days=1)
+
+                        dep_data.append({
+                            "Tid": departure['time'],
+                            "Destination": departure['direction'],
+                            "Linje": transport,
+                            "Typ av transport": transport_type,
+                            "Tid kvar": str(time_until_departure).split(".")[0],
+                        })
                 return pd.DataFrame(dep_data)
             else:
                 print("Inga avgångar")
@@ -185,17 +204,31 @@ class StopPlanner():
                     if isinstance(products, list):
                         for product in products:
                             transport_type = product.get("catOutL", "Unknown")
+                    arr_data.append({
+                        "Tid": arrival['time'],
+                        "Origin": arrival['origin'],
+                        "Linje": transport,
+                        "Typ av transport": transport_type
+                    })
 
+<<<<<<< HEAD
                             arr_time = datetime.strptime(
                                 arrival["time"], "%H:%M:%S").time()
                             current_time = datetime.now().time()
                             time_until_arrival = datetime.combine(datetime.today(), arr_time) - \
                                 datetime.combine(
                                     datetime.today(), current_time)
+=======
+                    arr_time = datetime.strptime(arrival["time"], "%H:%M:%S").time()
+                     current_time = datetime.now().time()
+                      time_until_arrival = datetime.combine(datetime.today(), arr_time) - \
+                           datetime.combine(datetime.today(), current_time)
+>>>>>>> 1b3ef66 (FRONTEND-Add-Stylesheet: Fixing merge conflict)
 
-                            if time_until_arrival < timedelta(0):
-                                time_until_arrival += timedelta(days=1)
+                       if time_until_arrival < timedelta(0):
+                            time_until_arrival += timedelta(days=1)
 
+<<<<<<< HEAD
                             arr_data.append({
                                 "Tid": arrival['time'],
                                 "Origin": arrival['origin'],
@@ -203,6 +236,15 @@ class StopPlanner():
                                 "Typ av transport": transport_type,
                                 "Tid kvar": str(time_until_arrival).split(".")[0],
                             })
+=======
+                        arr_data.append({
+                            "Tid": arrival['time'],
+                            "Origin": arrival['origin'],
+                            "Linje": transport,
+                            "Typ av transport": transport_type,
+                            "Tid kvar": str(time_until_arrival).split(".")[0],
+                        })
+>>>>>>> 1b3ef66 (FRONTEND-Add-Stylesheet: Fixing merge conflict)
                 return pd.DataFrame(arr_data)
             else:
                 print("Inga avgångar")
