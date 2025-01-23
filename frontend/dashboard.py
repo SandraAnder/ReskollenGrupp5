@@ -1,9 +1,9 @@
 import streamlit as st
+
+from backend.connect_to_api import ResRobot
+from backend.trips import StopPlanner
 from frontend.plot_maps import TripMap
 from utils.constants import StationIds
-from backend.connect_to_api import ResRobot
-from backend.trips import TripPlanner
-from backend.trips import StopPlanner
 
 trip_map = TripMap(
     origin_id=StationIds.MALMO.value, destination_id=StationIds.UMEA.value
@@ -15,9 +15,7 @@ tripPlanner = StopPlanner("")
 
 def main():
     st.markdown("# Reseplanerare")
-    st.markdown(
-        "Den här dashboarden syftar till att både utforska data för olika platser, men ska även fungera som en reseplanerare där du får välja och planera din resa."
-    )
+    st.markdown("Den här dashboarden syftar till att")
 
     trip_map.display_map()
 
