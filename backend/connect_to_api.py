@@ -4,6 +4,7 @@ import requests
 from pprint import pprint
 import re
 import pandas as pd
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -65,6 +66,38 @@ class ResRobot:
         return arrivals[:max_results]
 
     # Filter stops on arrival and departure ^
+
+    # Filter one hour ahead v
+    def get_departures_around_one_hour_ahead(self, stop_id):
+        url = f"https://api.resrobot.se/v2.1/departureBoard?id={stop_id}&format=json&accessId={self.API_KEY}"
+
+        response = requests.get(url)
+        if response.status_code != 200:
+            print(f"Error: {response.status_code}")
+            return None
+
+        departures = pd.DataFrame(response.json().get("Departure", []))
+        departures["datetime"] = pd.to_datetime(departures["date"] + " " + departures["time"], errors='coerce')
+        departures = departures.dropna(subset=["datetime"])
+
+        if departures.empty:
+            print("No valid datetime data.")
+            return None
+
+        one_hour_ahead = datetime.now() + timedelta(hours=1)
+        time_range = [one_hour_ahead - timedelta(minutes=15), one_hour_ahead + timedelta(minutes=15)]
+        departures_filtered = departures[(departures["datetime"] >= time_range[0]) & (departures["datetime"] <= time_range[1])]
+
+        if departures_filtered.empty:
+            print(f"No departures within ±15 minutes for stop_id {stop_id}.")
+            return None
+
+        departures_filtered["stop_id"] = stop_id
+        return departures_filtered[["name", "stop", "direction", "datetime", "stop_id"]]
+    # Filter one hour ahead ^
+    
+
+    
 
 
 if __name__ == "__main__":
