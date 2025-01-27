@@ -36,44 +36,48 @@ def main():
     st.markdown("""
     <div class="header-container">
         <h1>Reseplanerare</h1>
-        <p>Den här dashboarden syftar till att både utforska data för olika platser, men ska även fungera som en reseplanerare där du får välja och planera din resa.</p>
+        <p>Den här dashboarden syftar till att både utforska data för olika platser, <br>men ska även fungera som en reseplanerare där du får välja och planera din resa.</p>
     </div>
     """, unsafe_allow_html=True)
-    # st.markdown("# Reseplanerare")
-    # st.markdown(
-    #     "Den här dashboarden syftar till att både utforska data för olika platser, men ska även fungera som en reseplanerare där du får välja och planera din resa."
-    # )
 
-    # trip_map.display_map()
+    # Skapar en meny i sidofältet till vänster
+    st.sidebar.title("Meny")
+    page = st.sidebar.radio(
+        label="Välj sida",
+        options=["Sök resa", "Karta"])
 
-    # Visar tabell med val av station
-    station_name = st.text_input("Ange stationsnamn:", "Göteborg C")
+    if page == "Karta":
+        trip_map.display_map()
 
-    if station_name:
-        print(f"Anropar get_stop_name med {station_name}")
-        station = resrobot.get_stop_name(station_name)
+    elif page == "Sök resa":
+        # Visar tabell med val av station
+        station_name = st.text_input("Ange stationsnamn:", "Göteborg C")
 
-        if station:
-            # Visar departures
-            st.subheader(f"Avgångar från {station_name}")
-            departures_df = tripPlanner.get_timetable_dep(station)
-            if not departures_df.empty:
-                departures_df = departures_df.reset_index(
-                    drop=True)  # Tar bort index i DataFramen
-                render_table_without_index(departures_df)
+        if station_name:
+            print(f"Anropar get_stop_name med {station_name}")
+            station = resrobot.get_stop_name(station_name)
+
+            if station:
+                # Visar departures
+                st.subheader(f"Avgångar från {station_name}")
+                departures_df = tripPlanner.get_timetable_dep(station)
+                if not departures_df.empty:
+                    departures_df = departures_df.reset_index(
+                        drop=True)  # Tar bort index i DataFramen
+                    render_table_without_index(departures_df)
+                else:
+                    st.write("Inga avgångar hittades.")
+
+                # Visar arrivals
+                st.subheader(f"Ankomster till {station_name}")
+                arrivals_df = tripPlanner.get_timetable_arr(station)
+                if not arrivals_df.empty:
+                    arrivals_df = arrivals_df.reset_index(drop=True)
+                    render_table_without_index(arrivals_df)
+                else:
+                    st.write("Inga ankomster hittades.")
             else:
-                st.write("Inga avgångar hittades.")
-
-            # Visar arrivals
-            st.subheader(f"Ankomster till {station_name}")
-            arrivals_df = tripPlanner.get_timetable_arr(station)
-            if not arrivals_df.empty:
-                arrivals_df = arrivals_df.reset_index(drop=True)
-                render_table_without_index(arrivals_df)
-            else:
-                st.write("Inga ankomster hittades.")
-        else:
-            st.write(f"Kunde inte hitta stationen: {station_name}")
+                st.write(f"Kunde inte hitta stationen: {station_name}")
 
     read_css()
 

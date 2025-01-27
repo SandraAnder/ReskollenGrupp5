@@ -20,10 +20,11 @@
     --backgroundColor: #ecf6ff;
     --backgroundColorsecondary: #ecf6ff;
 
-    --headingColor: #013151; /* Färg för rubriker */
+    --headingColor: #a54505; /* Färg för rubriker */
     --paragraphColor: #414141; /* Färg för brödtext */
     --textColor: #323232;
     --sidebarColor: #8aa77b;
+    --selectBoxColor: #ffffff;
 }
 
 .block-container {
@@ -31,7 +32,7 @@
 }
 header.stAppHeader {
     background-color: var(--backgroundColor) !important;
-    color: #000000 !important;
+    color: #c15e24 !important;
 }
 
 /* lobotomized owl - 
@@ -63,14 +64,14 @@ p {
 
 h1 {
     font-size: calc(var(--s3) * 1.2); /* Ökar storleken på huvudrubriken */
-    color: var(--primaryColor);
+    color: var(--headingColor);
     margin-top: 1rem; /* Justerar marginalen ovanför rubriken */
     margin-bottom: 1rem; /* Justerar marginalen under rubriken */
-    text-align: center; /* Centrerar rubriken */
+    text-align: left; /* Centrerar rubriken */
     padding: 0.5rem 1rem; /* Lägger till lite utrymme runt rubriken */
-    background-color: rgba(60, 116, 68, 0.05); /* Subtil bakgrundsfärg (justerbar) */
-    border-radius: 8px; /* Gör hörnen rundade */
-    box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägger till en subtil skugga */
+    /*background-color: rgba(60, 116, 68, 0.05); /* Subtil bakgrundsfärg (justerbar) */
+    /*border-radius: 8px; /* Gör hörnen rundade */
+    /*box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägger till en subtil skugga */
 }
 
 h2 {
@@ -80,13 +81,13 @@ h2 {
     margin-bottom: 0.5rem; /* Justerar marginalen under underrubriken */
     /*text-align: center;  Centrerar underrubriken */
 }
-h1 + p {
-    font-size: var(--s1); /* Gör beskrivningstexten större */
-    color: var(--paragraphColor); /* Använder färgen för paragraftext */
-    text-align: center; /* Centrerar beskrivningen */
-    margin-top: 0; /* Justerar marginalen ovanför beskrivningen */
-    margin-bottom: 1rem; /* Justerar marginalen under beskrivningen */
-}
+/*h1 + p {
+/*    font-size: var(--s1); /* Gör beskrivningstexten större */
+/*    color: var(--paragraphColor); /* Använder färgen för paragraftext */
+/*    text-align: center; /* Centrerar beskrivningen */
+/*    margin-top: 0; /* Justerar marginalen ovanför beskrivningen */
+/*    margin-bottom: 1rem; /* Justerar marginalen under beskrivningen */
+/*}
 
 h3 {
     font-size: var(--s0);
@@ -99,12 +100,49 @@ h3 {
     padding-top: var(--s1);
     padding-left: var(--s3);
     padding-right: var(--s3);
-    max-width:100%; /* 110 characters bredd, bredden på den 'gröna' main sektionen */ 
+    max-width:100%; /* 110 characters bredd, bredden på den 'blå' main sektionen */ 
+
 }
+
+/* Container för huvudrubriken och beskrivningen */
+/*.header-container {
+/*    padding: 1rem 2rem; /* Utrymmet runtom */
+/*    background-color: rgba(220, 225, 252, 0.8); /* Liknande bakgrundsfärg med lite transparens */
+/*    border-radius: 8px; /* Gör hörnen rundade */
+/*    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* En liten skugga för att framhäva sektionen */
+/*    margin-bottom: 1rem; /* Utrymme under boxen */
+/*    text-align: center; /* Centrerar texten */
+/*}
+
+
+/* Styling för logotypen */
+.logo {
+    max-width: 100px; /* Justera storleken på logotypen */
+    margin-bottom: 1rem; /* Utrymme under logotypen */
+    /*display: block; /* Gör logotypen centrerad */
+    margin-left: auto; /* För att centrera logotypen */
+    margin-right: auto;
+}
+
+/* Gör huvudrubriken inom header-container större */
+.header-container h1 {
+    margin: 0;
+    font-size: var(--s3);
+    color: var(--headingColor);
+}
+
+/* Stilar för beskrivningstexten inom header-container */
+/*.header-container p {
+/*    margin: 0.5rem 0 0; /* Litet mellanrum ovanför men inget nedanför */
+/*    background-color: rgba(220, 225, 252, 0.8);
+/*    font-size: var(--s1); /* Gör beskrivningstexten större */
+/*    color: var(--paragraphColor);
+/*}
+
 
 /* Ändrar bakgrundsfärg och textfärg på selectboxar */
 div[data-baseweb="select"] > div {
-    background-color: #ffffff; /* Bakgrundsfärg */
+    background-color: var(--selectBoxColor); /* Bakgrundsfärg */
     color: #013151; /* Textfärg */
     border: 1px solid #003253; /* Kantfärg */
     padding: 3px;
@@ -120,13 +158,13 @@ div[data-baseweb="select"] > div {
 }
 
 div[data-baseweb="select"] > div > div {
-    color: #013151; /* Textfärg i selectboxen */
+    color: #c15e24; /* Textfärg i selectboxen */
 }
 
 /* Ändrar utseendet när selectboxen är i fokus */
 div[data-baseweb="select"]:focus-within {
     outline: none;
-    border: 1px solid #004088; /* Ändrar färg för kantlinjen vid fokus */
+    border: 1px solid #002550; /* Ändrar färg för kantlinjen vid fokus */
     box-shadow: 0 0 5px #004088; /* En liten skuggeffekt vid fokus */
     height: auto; /* anpassar sig till höjden*/
     max-width: 300px;
@@ -135,8 +173,8 @@ div[data-baseweb="select"]:focus-within {
 
 /* Styling för textinput */
 div[data-testid="stTextInput"] {
-    background-color: #ffffff;
-    color: #013151; /* Textfärg */
+    background-color: var(--selectBoxColor);
+    color: #5b2907; /* Textfärg */
     border: 2px solid #7871af;
     border-radius: 7px; /* Rundade hörn */
     padding: 5px; /* Ger tillräcklig inre marginal */
@@ -180,7 +218,67 @@ div[data-testid="stTextInput"]:focus-within {
     background-color: #f3f3f3;
 }
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid #580887;
+}
+
+#MainMenu {visibility: visible;} /* hamburger-menyn */
+header {
+    visibility: visible; /*deploy knappen*/
+    height: 0;
+    background: none !important;
+    background-color: transparent !important;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+/* Här ändras 'bakgrundsfärgen' till sidopanelen*/
+[data-testid="stSidebar"] {
+    background-color: #987ba7;
+}
+
+/* Ändrar textfärg för Streamlit-huvudknappar */
+.stButton>button, .stRadio label, .stSidebarButton>button {
+    color: #7a1a02 !important; 
+ }
+ /* Förbättrar marginaler och paddings runt radio-knappar */
+.stRadio > div {
+    margin-top: 0 !important;  /* Tar bort övre marginal */
+    padding-top: 0 !important; /* Tar bort eventuell övre padding */
+}
+.stRadio > div:first-child label {
+    display: none;  /* Gömmer den första labeln */
 }
 
 
+/* Gör radioknapparna mer som knappar */
+[data-testid="stSidebar"] label {
+    display: inline-block;
+    display: flex;
+    align-items: center; /* Centrerar innehållet lodrätt */
+    justify-content: center; /* Centrerar innehållet horisontellt */
+    margin: 5px 0;
+    padding: 15px 15px;
+    width: 100%;
+    border: 1px solid #f0d1b0;
+    border-radius: 3px;
+    background-color: #cfa77d;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: "Noto Sans", sans-serif;
+    size: 10px;
+    text-align: center;
+}
+
+[data-testid="stSidebar"] label:hover {
+    background-color: #a145d6;
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    margin-bottom: 20px;
+    font-weight: bold; /* Gör den fet för att särskilja från knapparna */
+    color: #013151;
+    display: block; /* Ser till att titeln är kvar som ett blockelement */
+}
