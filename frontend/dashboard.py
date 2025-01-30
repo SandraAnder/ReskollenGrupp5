@@ -33,6 +33,7 @@ def render_table_without_index(df):
 
 
 def main():
+
     st.markdown("""
     <div class="header-container">
         <h1>Reseplanerare</h1>
@@ -42,8 +43,9 @@ def main():
 
     # Skapar en meny i sidofältet till vänster
     st.sidebar.title("Meny")
+    st.sidebar.markdown("### Välj sida")
     page = st.sidebar.radio(
-        label="Välj sida",
+        label="",
         options=["Sök resa", "Karta"])
 
     if page == "Karta":
