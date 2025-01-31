@@ -1,13 +1,9 @@
 import streamlit as st
-import pandas as pd
 
 from backend.connect_to_api import ResRobot
 from backend.trips import StopPlanner
 from frontend.plot_maps import TripMap
 from utils.constants import StationIds
-from backend.connect_to_api import ResRobot
-from backend.trips import TripPlanner
-from backend.trips import StopPlanner
 from pathlib import Path
 
 
