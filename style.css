@@ -35,7 +35,7 @@ header.stAppHeader {
     color: #c15e24 !important;
 }
 body {
-    background-image: 'static/background_resekollen.jpg'; /* Bakgrundsbilden i static mappen */
+    background-image: img('static/background_resekollen.jpg'); /* Bakgrundsbilden i static mappen */
     background-size: cover; /* Gör att bilden täcker hela skärmen */
     background-position: center; /* Centrerar bilden */
     background-repeat: no-repeat; /* Förhindrar upprepning */
@@ -86,9 +86,6 @@ h1 {
     margin-bottom: 1rem; /* Justerar marginalen under rubriken */
     text-align: left; /* Centrerar rubriken */
     padding: 0.5rem 1rem; /* Lägger till lite utrymme runt rubriken */
-    /*background-color: rgba(60, 116, 68, 0.05); /* Subtil bakgrundsfärg (justerbar) */
-    /*border-radius: 8px; /* Gör hörnen rundade */
-    /*box-shadow: 0px 2px 5px rgba(49, 122, 79, 0.473); /* Lägger till en subtil skugga */
 }
 
 h2 {
@@ -96,7 +93,6 @@ h2 {
     color: var(--headingColor); /* Använder headingColor för underrubriken */
     margin-top: 0.5rem; /* Justerar marginalen ovanför underrubriken */
     margin-bottom: 0.5rem; /* Justerar marginalen under underrubriken */
-    /*text-align: center;  Centrerar underrubriken */
 }
 
 /* . to use class selector */
@@ -148,7 +144,6 @@ h2 {
 .logo {
     max-width: 100px; /* Justera storleken på logotypen */
     margin-bottom: 1rem; /* Utrymme under logotypen */
-    /*display: block; /* Gör logotypen centrerad */
     margin-left: auto; /* För att centrera logotypen */
     margin-right: auto;
 }

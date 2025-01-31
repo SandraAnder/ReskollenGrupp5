@@ -85,18 +85,17 @@ class TripPlanner:
         It returns a list of DataFrame objects, where each item corresponds to a trip
         """
         return []
-    
 
     # One hour ahead filter v
+
     def get_departures_around_one_hour_ahead(self, stop_id) -> pd.DataFrame:
         """
         Fetches departures around one hour ahead for a specific stop_id.
         Returns a DataFrame containing the filtered departures within ±15 minutes of one hour ahead.
         """
-        return self.resrobot.get_departures_around_one_hour_ahead(stop_id) 
-    
+        return self.resrobot.get_departures_around_one_hour_ahead(stop_id)
+
     # One hour ahead filter ^
-    
 
 
 class StopPlanner():
