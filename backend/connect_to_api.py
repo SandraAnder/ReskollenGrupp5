@@ -13,9 +13,14 @@ class ResRobot:
 
     def trips(self, origin_id=740000001, destination_id=740098001):
         """origing_id and destination_id can be found from Stop lookup API"""
-        url = f"""https://api.resrobot.se/v2.1/trip?format=json&originId={origin_id}
-        &destId={destination_id}&passlist=true&
-        showPassingPoints=true&accessId={self.API_KEY}"""
+        url = (
+            f"https://api.resrobot.se/v2.1/trip?format=json"
+            f"&originId={origin_id}"
+            f"&destId={destination_id}"
+            f"&passlist=true"
+            f"&showPassingPoints=true"
+            f"&accessId={self.API_KEY}"
+        )
 
         try:
             response = requests.get(url)
@@ -26,8 +31,11 @@ class ResRobot:
             print(f"Network or HTTP error: {err}")
 
     def access_id_from_location(self, location):
-        url = f"""https://api.resrobot.se/v2.1/location.name?input={location}
-        &format=json&accessId={self.API_KEY}"""
+        url = (
+            f"https://api.resrobot.se/v2.1/location.name?input={location}"
+            f"&format=json"
+            f"&accessId={self.API_KEY}"
+        )
         response = requests.get(url)
         result = response.json()
 
@@ -44,16 +52,22 @@ class ResRobot:
 
     # Function to extract the stopname
     def get_stop_name(self, location):
-        url_stopName = f"""https://api.resrobot.se/v2.1/location.name?input={location}
-        &format=json&accessId={self.API_KEY}"""
+        url_stopName = (
+            f"https://api.resrobot.se/v2.1/location.name?input={location}"
+            f"&format=json"
+            f"&accessId={self.API_KEY}"
+        )
 
         result_name = requests.get(url_stopName)
         return result_name.json().get("stopLocationOrCoordLocation")
 
     def get_departures(self, location_ids, max_results=8):
-        url_departures = f"""https://api.resrobot.se/v2.1/departureBoard?
-        id={location_ids}&format=json&maxJourneys={max_results}&
-        accessId={self.API_KEY}"""
+        url_departures = (
+            f"https://api.resrobot.se/v2.1/departureBoard?id={location_ids}"
+            f"&format=json"
+            f"&maxJourneys={max_results}"
+            f"&accessId={self.API_KEY}"
+        )
 
         response = requests.get(url_departures)
         data = response.json()
@@ -62,8 +76,12 @@ class ResRobot:
         return departures[:max_results]
 
     def get_arrivals(self, location_ids, max_results=8):
-        url_arrivals = f"""https://api.resrobot.se/v2.1/arrivalBoard?id={location_ids}
-        &format=json&maxJourneys={max_results}&accessId={self.API_KEY}"""
+        url_arrivals = (
+            f"https://api.resrobot.se/v2.1/arrivalBoard?id={location_ids}"
+            f"&format=json"
+            f"&maxJourneys={max_results}"
+            f"&accessId={self.API_KEY}"
+        )
         response = requests.get(url_arrivals)
 
         data_arrivals = response.json()
@@ -74,8 +92,11 @@ class ResRobot:
 
     # Filter one hour ahead v
     def get_departures_around_one_hour_ahead(self, stop_id):
-        url = f"""https://api.resrobot.se/v2.1/departureBoard?id={stop_id}
-        &format=json&accessId={self.API_KEY}"""
+        url = (
+            f"https://api.resrobot.se/v2.1/departureBoard?id={stop_id}"
+            f"&format=json"
+            f"&accessId={self.API_KEY}"
+        )
 
         response = requests.get(url)
         if response.status_code != 200:
