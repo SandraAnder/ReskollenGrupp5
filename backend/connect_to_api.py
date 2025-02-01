@@ -128,7 +128,14 @@ class ResRobot:
             return None
 
         departures_filtered["stop_id"] = stop_id
-        return departures_filtered[["name", "stop", "direction", "datetime", "stop_id"]]
+
+        departures_filtered = departures_filtered.rename(columns={
+            "name": "Transport",
+            "direction": "Destination",
+            "time": "Tid"
+        })
+
+        return departures_filtered[["Tid","Destination","Transport"]]
 
     # Filter one hour ahead ^
 

@@ -74,6 +74,14 @@ def main():
                     render_table_without_index(arrivals_df)
                 else:
                     st.write("Inga ankomster hittades.")
+                    
+                st.subheader(f"Avgångar inom en timme från {station_name}")
+                stop_id = station[0]["StopLocation"]["id"]  # Extrahera stopID från stationen
+                departures_one_hour_df = resrobot.get_departures_around_one_hour_ahead(stop_id)  # Här ändrar vi till resrobot
+                if departures_one_hour_df is not None and not departures_one_hour_df.empty:
+                    render_table_without_index(departures_one_hour_df)
+                else:
+                    st.write("Inga avgångar inom en timme hittades.")
             else:
                 st.write(f"Kunde inte hitta stationen: {station_name}")
 
