@@ -31,11 +31,45 @@ def render_table_without_index(df):
 def main():
     st.markdown(
         """
+    <div class="logo-container">
+        <img src="""
+        + (
+            "https://static.vecteezy.com/system/resources/previews/027/529/362/"
+            "non_2x/tour-bus-and-map-with-traffic-navigation-route-location-marker-"
+            "scheme-flat-illustration-for-passenger-traffic-service-vector.jpg"
+        )
+        + """
+        alt="Logotyp" class="logo">
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    # Custom HTML/CSS for the banner
+    banner_img = (
+        """
+    <div class="banner">
+        <img src="""
+        + (
+            "https://static.vecteezy.com/ti/gratis-vektor/p1/14041676-metro-"
+            "underjordisk-och-tunnelbana-rader-transport-karta-vector.jpg"
+        )
+        + """
+        alt="Banner Image">
+    </div>"""
+    )
+    # Visar bannern med spec höjd
+    st.components.v1.html(banner_img, height=350)
+
+    st.markdown(
+        """
     <div class="header-container">
         <h1>Reseplanerare</h1>
-        <p>Den här dashboarden syftar till att både utforska data för olika platser,</p>
-        <p>men ska även fungera som en reseplanerare</p>
-        <p>där du får välja och planera din resa.</p>
+        <p>
+            Den här dashboarden syftar till att både utforska data för olika platser,
+            <br>men ska även fungera som en reseplanerare där du får välja och
+            planera din resa.
+        </p>
     </div>
     """,
         unsafe_allow_html=True,
