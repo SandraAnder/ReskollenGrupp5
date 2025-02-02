@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import pandas as pd
 import requests
@@ -92,8 +92,14 @@ class ResRobot:
 
     # Filter one hour ahead v
     def get_departures_around_one_hour_ahead(self, stop_id):
+        now = datetime.now()  # Hämtar tiden nu
+        date = now.strftime("%Y-%m-%d")
+        time = now.strftime("%H:%M")
+
         url = (
             f"https://api.resrobot.se/v2.1/departureBoard?id={stop_id}"
+            f"&date={date}"
+            f"&time={time}"
             f"&format=json"
             f"&accessId={self.API_KEY}"
         )
@@ -101,41 +107,19 @@ class ResRobot:
         response = requests.get(url)
         if response.status_code != 200:
             print(f"Error: {response.status_code}")
-            return None
+            return pd.DataFrame()
 
-        departures = pd.DataFrame(response.json().get("Departure", []))
-        departures["datetime"] = pd.to_datetime(
-            departures["date"] + " " + departures["time"], errors="coerce"
-        )
-        departures = departures.dropna(subset=["datetime"])
+        data = response.json()
+        departures = data.get("Departure", [])
 
-        if departures.empty:
-            print("No valid datetime data.")
-            return None
+        if not departures:
+            print(f"No departures found for stop_id {stop_id}.")
+            # Returnerar en tom DataFrame istället för en lista.
+            return pd.DataFrame()
 
-        one_hour_ahead = datetime.now() + timedelta(hours=1)
-        time_range = [
-            one_hour_ahead - timedelta(minutes=15),
-            one_hour_ahead + timedelta(minutes=15),
-        ]
-        departures_filtered = departures[
-            (departures["datetime"] >= time_range[0])
-            & (departures["datetime"] <= time_range[1])
-        ]
+        departures_df = pd.DataFrame(departures)
 
-        if departures_filtered.empty:
-            print(f"No departures within ±15 minutes for stop_id {stop_id}.")
-            return None
-
-        departures_filtered["stop_id"] = stop_id
-
-        departures_filtered = departures_filtered.rename(columns={
-            "name": "Transport",
-            "direction": "Destination",
-            "time": "Tid"
-        })
-
-        return departures_filtered[["Tid","Destination","Transport"]]
+        return departures_df
 
     # Filter one hour ahead ^
 

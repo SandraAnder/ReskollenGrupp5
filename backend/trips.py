@@ -89,19 +89,8 @@ class TripPlanner:
         """Fetches all available trips today between the origin_id and destination_id
         It returns a list of DataFrame objects, where each item corresponds to a trip
         """
+
         return []
-
-    # One hour ahead filter v
-
-    def get_departures_around_one_hour_ahead(self, stop_id) -> pd.DataFrame:
-        """
-        Fetches departures around one hour ahead for a specific stop_id.
-        Returns a DataFrame containing the filtered
-        departures within ±15 minutes of one hour ahead.
-        """
-        return self.resrobot.get_departures_around_one_hour_ahead(stop_id)
-
-    # One hour ahead filter ^
 
 
 class StopPlanner:
@@ -225,6 +214,69 @@ class StopPlanner:
             return pd.DataFrame()
 
     # Filter stops on arrival and departure ^
+
+    # One hour ahead filter v
+
+    def get_departures_around_one_hour_ahead(self, stop_id) -> pd.DataFrame:
+        """
+        Fetches departures around one hour ahead for a specific stop_id.
+        Returns a DataFrame containing the filtered
+        departures within the next hour.
+        """
+
+        # Hämtar avgångar från API
+        departures_df = resrobot.get_departures_around_one_hour_ahead(stop_id)
+
+        # Om DataFramen är tom, returneras en tom DataFrame
+        if departures_df.empty:
+            print(f"No departures found for stop_id {stop_id}")
+            return pd.DataFrame()
+
+        # Lägger till en datetime-kolumn så vi kan filtrera avgångar baserat på tid
+        departures_df["date"] = departures_df["date"].fillna(
+            datetime.now().strftime("%Y-%m-%d")
+        )
+        departures_df["time"] = departures_df["time"].fillna("00:00")
+
+        # Konverterar till datetime-format
+        departures_df["datetime"] = pd.to_datetime(
+            departures_df["date"] + " " + departures_df["time"], errors="coerce"
+        )
+
+        # Tar bort rader där datetime är NaT
+        departures_df = departures_df.dropna(subset=["datetime"])
+
+        # Om DataFrame är tom efter att den rensats, returneras en tom DataFrame
+        if departures_df.empty:
+            print("No valid datetime data.")
+            return pd.DataFrame()
+
+        # Filtrerar avgångar som sker mellan 'nu' och en timme framåt
+        now = datetime.now()
+        one_hour_ahead = now + timedelta(hours=1)
+
+        departures_filtered = departures_df[
+            (departures_df["datetime"] >= now)
+            & (departures_df["datetime"] <= one_hour_ahead)
+        ].copy()
+
+        # Om inga avgångar hittas, returneras en tom DataFrame
+        if departures_filtered.empty:
+            print(f"No departures within the next hour for stop_id {stop_id}.")
+            return pd.DataFrame()
+
+        # Fixar till `SettingWithCopyWarning`
+        departures_filtered = departures_filtered.copy()
+        departures_filtered["stop_id"] = stop_id
+
+        # Ändrar kolumnnamn för att matcha UI:t
+        departures_filtered = departures_filtered.rename(
+            columns={"name": "Transport", "direction": "Destination", "time": "Tid"}
+        )
+
+        return departures_filtered[["Tid", "Destination", "Transport"]]
+
+    # One hour ahead filter ^
 
 
 if __name__ == "__main__":
