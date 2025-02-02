@@ -201,6 +201,27 @@ div[data-testid="stTextInput"]:focus-within {
     border: 2px solid #004088; /* Samma fokusfärg som selectbox */
     box-shadow: 0 0 5px #004088; /* Ljusare skugga vid fokus */
 }
+/* Här ändras scrollbarhet i avgång en timma framåt */
+.scrollable-table {
+    max-height: 400px; /* Justera höjden vid behov */
+    overflow-y: auto; /* Gör att tabellen blir scrollbar */
+    border: 1px solid #ddd;
+    padding: 5px;
+    position: relative;
+}
+
+.scrollable-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scrollable-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #5764ac; /* Samma färg som din header */
+    color: white;
+    z-index: 2;
+}
 
 /* Stylar tabellerna*/
 .styled-table {
