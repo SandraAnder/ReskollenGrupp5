@@ -67,7 +67,7 @@ h1 {
     color: var(--headingColor);
     margin-top: 0rem; /* Justerar marginalen ovanför rubriken */
     margin-bottom: 1rem; /* Justerar marginalen under rubriken */
-    text-align: left; /* Centrerar rubriken */
+    text-align: center; /* Centrerar rubriken */
     padding: 0.5rem 1rem; /* Lägger till lite utrymme runt rubriken */
 }
 
@@ -94,8 +94,8 @@ h2 {
     justify-content: center;
     flex-direction: column;
     padding: 1rem;
-    background-color: transparent;
-    border-radius: 0px;
+    background-color: #dfe3e7;
+    border-radius: 10px;
     box-shadow: none;
     margin-bottom: 1rem;
     text-align: left;
@@ -134,11 +134,11 @@ h2 {
 
 /* Styling för logotypen */
 .logo-container {
-    position: absolute;
-    top: -60px; /* Justerar avstånd från toppen */
-    left: 5px; /* Justerar avstånd från vänster */
+    position: absolute; 
+    top: 50px; /* Justerar avstånd från toppen */
+    left: 20px; /* Justerar avstånd från vänster */
     z-index: 1000; /* Ser till att loggan ligger över allt annat */
-    width: 80px;
+    width: 100px;
     height: auto;
     pointer-events: none; /* Förhindrar att loggan påverkar andra element */
 }
