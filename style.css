@@ -17,9 +17,7 @@
 
     /*CSS variables*/
     --primaryColor: #013151;
-    --backgroundColor: #ecf6ff;
-    --backgroundColorsecondary: #ecf6ff;
-    --backgroundColor: #ecf6ff;
+    --backgroundColor: #ffffff;
     --backgroundColorsecondary: #ecf6ff;
 
     --headingColor: #a54505; /* Färg för rubriker */
@@ -29,30 +27,13 @@
     --selectBoxColor: #ffffff;
 }
 
+/* Deploy och ovan del */
 .block-container {
     background-color: var(--backgroundColor);
 }
 header.stAppHeader {
-    background-color: var(--backgroundColor) !important;
+    background-color: var(--backgroundColor);
     color: #c15e24 !important;
-}
-body {
-    background-image: img('static/background_resekollen.jpg'); /* Bakgrundsbilden i static mappen */
-    background-size: cover; /* Gör att bilden täcker hela skärmen */
-    background-position: center; /* Centrerar bilden */
-    background-repeat: no-repeat; /* Förhindrar upprepning */
-    background-attachment: fixed; /* Fixerar bakgrunden vid scrollning */
-}
-/* Lägger till en semi-transparent overlay för att minska opaciteten */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.6); /* Justerar opaciteten (0 = genomskinlig, 1 = ingen genomskinlighet) */
-    z-index: -1; /* Placerar det bakom allt annat */
 }
 
 /* lobotomized owl - 
@@ -82,11 +63,11 @@ p {
 }
 
 h1 {
-    font-size: calc(var(--s3) * 1.5); /* Ökar storleken på huvudrubriken */
+    font-size: calc(var(--s3) * 2); /* Ökar storleken på huvudrubriken */
     color: var(--headingColor);
-    margin-top: 1rem; /* Justerar marginalen ovanför rubriken */
+    margin-top: 0rem; /* Justerar marginalen ovanför rubriken */
     margin-bottom: 1rem; /* Justerar marginalen under rubriken */
-    text-align: left; /* Centrerar rubriken */
+    text-align: center; /* Centrerar rubriken */
     padding: 0.5rem 1rem; /* Lägger till lite utrymme runt rubriken */
 }
 
@@ -103,7 +84,7 @@ h2 {
     padding-top: var(--s1);
     padding-left: var(--s3);
     padding-right: var(--s3);
-    max-width:100%; /* 110 characters bredd, bredden på den 'blå' main sektionen */ 
+    max-width:100%; /* 110 characters bredd, bredden på den main sektionen */ 
 
 }
 
@@ -113,8 +94,8 @@ h2 {
     justify-content: center;
     flex-direction: column;
     padding: 1rem;
-    background-color: transparent;
-    border-radius: 0px;
+    background-color: #dfe3e7;
+    border-radius: 10px;
     box-shadow: none;
     margin-bottom: 1rem;
     text-align: left;
@@ -126,7 +107,7 @@ h2 {
 }
 
 .header-container h1 {
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
     color: var(--headingColor);
     margin-bottom: 10;
@@ -141,13 +122,32 @@ h2 {
     text-align: left;
 }
 
+.banner {
+    background-image: url("https://static.vecteezy.com/ti/gratis-vektor/p1/14041676-metro-underjordisk-och-tunnelbana-rader-transport-karta-vector.jpg");
+    background-size: cover;
+    background-position: center bottom; /* Justera bilden */
+    height: 400px; /* Anpassa höjd */
+    width: 100%;
+    margin-top: -100px; /* Minskar paddingen ovanför */
+}
+
 
 /* Styling för logotypen */
+.logo-container {
+    position: absolute; 
+    top: 50px; /* Justerar avstånd från toppen */
+    left: 20px; /* Justerar avstånd från vänster */
+    z-index: 1000; /* Ser till att loggan ligger över allt annat */
+    width: 100px;
+    height: auto;
+    pointer-events: none; /* Förhindrar att loggan påverkar andra element */
+}
+
 .logo {
-    max-width: 100px; /* Justera storleken på logotypen */
-    margin-bottom: 1rem; /* Utrymme under logotypen */
-    margin-left: auto; /* För att centrera logotypen */
-    margin-right: auto;
+    max-width: 80px;  /* Ändra storlek på logotypen */
+    height: auto;
+    border-radius: 10px; /* Rundade hörn */
+    opacity: 1; /* Minskar opaciteten något */
 }
 
 
