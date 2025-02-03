@@ -66,7 +66,7 @@ def main():
     <div class="header-container">
         <h1>Reseplanerare</h1>
         <p>
-            Den här dashboarden syftar till att både utforska data för olika platser,
+            Denna dashboarden syftar till att utforska data för olika platser,
             <br>men ska även fungera som en reseplanerare där du får välja och
             planera din resa.
         </p>
