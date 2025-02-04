@@ -92,6 +92,15 @@ class TripPlanner:
 
         return []
 
+    def count_changes(self) -> int:
+        if not self.trips:
+            return 0
+
+        next_trip = self.trips[0]
+        leglist = next_trip.get("LegList", {}).get("Leg", [])
+
+        return max(0, len(leglist) - 1)
+
 
 class StopPlanner:
     def __init__(self, station) -> None:
