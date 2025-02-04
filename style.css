@@ -94,11 +94,11 @@ h2 {
     justify-content: center;
     flex-direction: column;
     padding: 1rem;
-    background-color: #dfe3e7;
+    background-color: transparent;
     border-radius: 10px;
     box-shadow: none;
     margin-bottom: 1rem;
-    text-align: left;
+    text-align: center;
 }
 
 .header-container img {
@@ -111,6 +111,8 @@ h2 {
     font-weight: bold;
     color: var(--headingColor);
     margin-bottom: 10;
+    margin-left: 120px; /* Flyttar texten åt höger */
+    text-align: left;
 }
 
 .header-container p {
@@ -144,10 +146,10 @@ h2 {
 }
 
 .logo {
-    max-width: 80px;  /* Ändra storlek på logotypen */
+    max-width: 90px;  /* Ändrar storlek på logotypen */
     height: auto;
     border-radius: 10px; /* Rundade hörn */
-    opacity: 1; /* Minskar opaciteten något */
+    opacity: 1; /* Minskar opaciteten */
 }
 
 
