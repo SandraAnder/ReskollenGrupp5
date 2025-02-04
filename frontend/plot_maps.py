@@ -56,10 +56,10 @@ class TripMap(Maps):
         st.markdown("Klicka på varje station för mer information. Detta är en exempelresa mellan Malmö och Umeå")
         
         # Lägg till textfält för att söka efter stationer
-        search_station = st.text_input("Sök efter station:", "")
+        search_input= st.text_input("Sök efter station:", "")
         
         # Skapa kartan baserat på sökningen
-        map_html = self._create_map(search_station)._repr_html_()
+        map_html = self._create_map(search_input)._repr_html_()
 
         # Visa kartan i Streamlit
         st.components.v1.html(map_html, height=500)
