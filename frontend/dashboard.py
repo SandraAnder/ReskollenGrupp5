@@ -5,8 +5,8 @@ import streamlit as st
 from backend.connect_to_api import ResRobot
 from backend.trips import StopPlanner
 from frontend.plot_maps import TripMap
-from utils.constants import StationIds
 
+#
 st.set_page_config(
     page_title="Reskollen",  # Titel på browserfliken
     page_icon="🦜",  # Icon på browserfliken
@@ -14,10 +14,21 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Sidebaren startar i utfällt läge
 )
 
-trip_map = TripMap(
-    origin_id=StationIds.MALMO.value, destination_id=StationIds.UMEA.value
-)
+
+# FLYTTA ->
+
+origin_id_name = st.text_input("FRÅN", "Göteborg C")
+destination_id_name = st.text_input("TILL", "Stockholm C")
+
+# FLYTTA ->
+
+
 resrobot = ResRobot()
+
+station_id1, station_id2 = resrobot.get_station_ids(origin_id_name, destination_id_name)
+
+trip_map = TripMap(station_id1, station_id2)
+
 
 tripPlanner = StopPlanner("")
 

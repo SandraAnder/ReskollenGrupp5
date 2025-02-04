@@ -11,7 +11,7 @@ load_dotenv()
 class ResRobot:
     API_KEY = os.getenv("API_KEY")
 
-    def trips(self, origin_id=740000001, destination_id=740098001):
+    def trips(self, origin_id, destination_id):
         """origing_id and destination_id can be found from Stop lookup API"""
         url = (
             f"https://api.resrobot.se/v2.1/trip?format=json"
@@ -120,6 +120,30 @@ class ResRobot:
         departures_df = pd.DataFrame(departures)
 
         return departures_df
+
+    def get_station_ids(self, location1, location2):
+        def fetch_station_id(location):
+            url = f"https://api.resrobot.se/v2.1/location.name?input={location}&format=json&accessId={self.API_KEY}"
+            response = requests.get(url)
+
+            if response.status_code != 200:
+                print(
+                    f"Error: API request failed for {location} with status code {response.status_code}"
+                )
+                return None
+
+            data = response.json().get("stopLocationOrCoordLocation")
+
+            if isinstance(data, list) and len(data) > 0:
+                return data[0].get("StopLocation", {}).get("extId")
+
+            print(f"Error: No station found for {location}")
+            return None
+
+        station_id1 = fetch_station_id(location1)
+        station_id2 = fetch_station_id(location2)
+
+        return station_id1, station_id2
 
     # Filter one hour ahead ^
 
