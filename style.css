@@ -78,16 +78,6 @@ h2 {
     margin-bottom: 0.5rem; /* Justerar marginalen under underrubriken */
 }
 
-/* . to use class selector */
-.stAppViewBlockContainer {
-    background-image: linear-gradient(to bottom right, rgb(221, 240, 255) , rgb(184, 184, 255));
-    padding-top: var(--s1);
-    padding-left: var(--s3);
-    padding-right: var(--s3);
-    max-width:100%; /* 110 characters bredd, bredden på den main sektionen */ 
-
-}
-
 .header-container {
     display: flex;
     align-items: left;
@@ -127,8 +117,8 @@ h2 {
 .banner {
     background-image: url("https://static.vecteezy.com/ti/gratis-vektor/p1/14041676-metro-underjordisk-och-tunnelbana-rader-transport-karta-vector.jpg");
     background-size: cover;
-    background-position: center bottom; /* Justera bilden */
-    height: 400px; /* Anpassa höjd */
+    background-position: center bottom; /* Justerar bilden */
+    height: 400px; /* Anpassar höjd */
     width: 100%;
     margin-top: -100px; /* Minskar paddingen ovanför */
 }
@@ -283,7 +273,26 @@ header {
 /* Här ändras 'bakgrundsfärgen' till sidopanelen*/
 [data-testid="stSidebar"] {
     background-color: #7b9ea7;
+    color: white; /* Vit text */
+    padding: 20px;
 }
+
+/* Styla text i sidomenyn */
+[data-testid="stSidebar"] h1, 
+[data-testid="stSidebar"] h2, 
+[data-testid="stSidebar"] h3 {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Noto Sans', sans-serif;
+}
+[data-testid="stSidebar"] p {
+    color: rgb(239, 203, 183);
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Noto Sans', sans-serif;
+}
+
 
 /* Gör radioknapparna mer som knappar */
 [data-testid="stSidebar"] label {
@@ -292,11 +301,12 @@ header {
     justify-content: left; /* Centrerar innehållet horisontellt */
     margin: 5px 0px;
     padding: 5px 8px;
-    width: 50%;
+    width: 100%;
     border: 1px solid #879dab;
     border-radius: 5px;
     background-color: #5b7992;
     color: #ffffff !important;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -305,12 +315,25 @@ header {
 [data-testid="stSidebar"] label:hover {
     background-color: #6b9abe;
     border-color: #6b9abe;
+    transform: scale(1.05);
 }
+
 /* Tar bort den konstiga rutan runt texten på knapparna */
 .stRadio div {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
+}
+
+/* Lägger till en logotyp i sidebar*/
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.sidebar-logo img {
+    width: 200px;
+    margin-bottom: 5px;
+    border-radius: 7px;
 }
 
 /* Markerad knapp (vald radioknapp) */

@@ -14,21 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Sidebaren startar i utfällt läge
 )
 
-
-# FLYTTA ->
-
-origin_id_name = st.text_input("FRÅN", "Göteborg C")
-destination_id_name = st.text_input("TILL", "Stockholm C")
-
-# FLYTTA ->
-
-
 resrobot = ResRobot()
-
-station_id1, station_id2 = resrobot.get_station_ids(origin_id_name, destination_id_name)
-
-trip_map = TripMap(station_id1, station_id2)
-
 
 tripPlanner = StopPlanner("")
 
@@ -72,6 +58,21 @@ def main():
         unsafe_allow_html=True,
     )
 
+    st.sidebar.markdown(
+        """
+        <div class="sidebar-logo">
+            <img src= """
+        + (
+            "https://static.vecteezy.com/system/resources/previews/027/529/"
+            "362/non_2x/tour-bus-and-map-with-traffic-navigation-route-location-"
+            "marker-scheme-flat-illustration-for-passenger-traffic-service-vector.jpg"
+        )
+        + """>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown(
         """
     <div class="header-container">
@@ -92,6 +93,15 @@ def main():
     page = st.sidebar.radio(label="", options=["Sök resa", "Karta"])
 
     if page == "Karta":
+        origin_id_name = st.text_input("FRÅN", "Göteborg C")
+        destination_id_name = st.text_input("TILL", "Stockholm C")
+
+        station_id1, station_id2 = resrobot.get_station_ids(
+            origin_id_name, destination_id_name
+        )
+
+        trip_map = TripMap(station_id1, station_id2)
+
         trip_map.display_map()
 
     elif page == "Sök resa":
