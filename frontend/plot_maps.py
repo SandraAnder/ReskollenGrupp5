@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
+from datetime import timedelta
 
 import folium
+import pandas as pd
 import streamlit as st
 
 from backend.trips import TripPlanner
@@ -45,9 +47,25 @@ class TripMap(Maps):
 
         return geographical_map
 
+    def _calculate_total_trip_time(self):
+        self.next_trip["datetime"] = pd.to_datetime(
+            self.next_trip["date"] + " " + self.next_trip["time"]
+        )
+        self.next_trip["time_diff"] = self.next_trip["datetime"].diff()
+
+        total_trip_time = self.next_trip["time_diff"].sum()
+
+        if pd.isna(total_trip_time):
+            total_trip_time = timedelta(seconds=0)
+
+        return total_trip_time
+
     def display_map(self):
         st.markdown("## Karta över stationerna i din resa")
         st.markdown(
             "Klicka på varje station för mer information. Detta är en exempelresa mellan Malmö och Umeå"
         )
         st.components.v1.html(self._create_map()._repr_html_(), height=500)
+
+        total_trip_time = self._calculate_total_trip_time()
+        st.markdown(f"**Total restid: {str(total_trip_time)}**")
