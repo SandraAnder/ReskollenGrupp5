@@ -1,7 +1,9 @@
-import folium
-from backend.trips import TripPlanner
-import streamlit as st
 from abc import ABC, abstractmethod
+
+import folium
+import streamlit as st
+
+from backend.trips import TripPlanner
 
 
 class Maps(ABC):
@@ -53,6 +55,12 @@ class TripMap(Maps):
 
     def display_map(self):
         st.markdown("## Karta över stationerna i din resa")
+
+        st.markdown(
+            "Klicka på varje station för mer information. Detta är en exempelresa mellan Malmö och Umeå"
+        )
+        st.components.v1.html(self._create_map()._repr_html_(), height=500)
+
         st.markdown("Klicka på varje station för mer information. Detta är en exempelresa mellan Malmö och Umeå")
         
         # Lägg till textfält för att söka efter stationer
@@ -63,5 +71,3 @@ class TripMap(Maps):
 
         # Visa kartan i Streamlit
         st.components.v1.html(map_html, height=500)
-
-

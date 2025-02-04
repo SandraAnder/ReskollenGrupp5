@@ -1,5 +1,4 @@
-from setuptools import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 
 print(find_packages(exclude=["test*", "explorations"]))
 
@@ -10,9 +9,14 @@ setup(
     It has backend, frontend and utils.""",
     author="Sandra Andersson",
     author_email="dvasdvjnaaadvjn@gmail.com",
-    install_packages=["streamlit", "pandas", "requests",
-                      "folium", "pprint", "python-dotenv"],
+    install_packages=[
+        "streamlit",
+        "pandas",
+        "requests",
+        "folium",
+        "pprint",
+        "python-dotenv",
+    ],
     packages=find_packages(exclude=["test*", "explorations"]),
-    entry_points={"console_scripts": [
-        "dashboard = utils.run_dashboard:run_dashboard"]},
+    entry_points={"console_scripts": ["dashboard = utils.run_dashboard:run_dashboard"]},
 )
