@@ -44,12 +44,16 @@ class TripMap(Maps):
 
         for i, row in self.next_trip.iterrows():
             marker_color = "red"
-            popup_text = f"{row['name']}<br>{row['time']}<br>{row['date']}"
+            popup_text = (
+                f"<b>Station:</b> {row['name']}<br>"
+                f"<b>Avgångstid:</b> {row['time']}<br>"
+                f"<b>Linje:</b> {row['line']}"
+            )
 
             if i == 0:
-                popup_text += f"<br><b>Departure: {row['time']}</b>"
+                popup_text += f"<br><b>Avgångstid: {row['time']}</b>"
             elif i == len(self.next_trip) - 1:
-                popup_text += f"<br><b>Arrival: {row['time']}</b>"
+                popup_text += f"<br><b>Ankomsttid: {row['time']}</b>"
 
             if i in self.next_trip.index[1:-1]:
                 if self.next_trip.iloc[i - 1]["name"] != row["name"]:
@@ -60,6 +64,7 @@ class TripMap(Maps):
                 popup=popup_text,
                 icon=folium.Icon(color=marker_color),
             ).add_to(geographical_map)
+
         return geographical_map
 
     def _calculate_total_trip_time(self):
@@ -90,8 +95,9 @@ class TripMap(Maps):
             self.last_stop["time"], format="%H:%M:%S"
         ).strftime("%H:%M")
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
 
         col1.markdown(f"**⏳ Total restid:** {int(total_hours)}h {int(total_minutes)}m")
         col2.markdown(f"**🚆 Avgångstid:** {departure_time}")
         col3.markdown(f"**🏁 Ankomsttid:** {arrival_time}")
+        col4.markdown(f"Antal byten: {self.number_of_changes}")

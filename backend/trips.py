@@ -53,20 +53,47 @@ class TripPlanner:
             return pd.DataFrame()
 
         next_trip = self.trips[0]
-
         leglist = next_trip.get("LegList", {}).get("Leg", [])
-        if not leglist:
-            print("Inga steg i resan.")
+
+        if not isinstance(leglist, list):
+            print("Felaktig data för resans steg.")
             return pd.DataFrame()
 
-        df_legs = pd.DataFrame(leglist)
+        trip_data = []
 
-        if "Stops" not in df_legs or df_legs["Stops"].isnull().all():
-            print("Inga hållplatser hittades.")
-            return pd.DataFrame()
+        for leg in leglist:
+            # Hanterar om "Product" finns och är en lista
+            products = (
+                leg["Product"]
+                if "Product" in leg and isinstance(leg["Product"], list)
+                else []
+            )
+            transport_line = (
+                products[0]["displayNumber"]
+                if products and "displayNumber" in products[0]
+                else "Okänd linje"
+            )
 
-        df_stops = pd.json_normalize(df_legs["Stops"].dropna(), "Stop", errors="ignore")
+            stops = leg.get("Stops", {}).get("Stop", [])
+            if not isinstance(stops, list):
+                continue  # Hoppar över om stopplistan är felaktig
 
+            for stop in stops:
+                trip_data.append(
+                    {
+                        "name": stop.get("name", "Okänd"),
+                        "extId": stop.get("extId", None),
+                        "lon": stop.get("lon", None),
+                        "lat": stop.get("lat", None),
+                        "depTime": stop.get("depTime", None),
+                        "depDate": stop.get("depDate", None),
+                        "arrTime": stop.get("arrTime", None),
+                        "arrDate": stop.get("arrDate", None),
+                        "line": transport_line,
+                    }
+                )
+
+        df_stops = pd.DataFrame(trip_data)
         df_stops["time"] = df_stops["arrTime"].fillna(df_stops["depTime"])
         df_stops["date"] = df_stops["arrDate"].fillna(df_stops["depDate"])
 
@@ -82,6 +109,7 @@ class TripPlanner:
                 "arrDate",
                 "time",
                 "date",
+                "line",
             ]
         ]
 
