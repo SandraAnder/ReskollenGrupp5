@@ -51,9 +51,8 @@ class ResRobot:
             if stop_data.get("extId"):
                 print(f"{stop_data['name']:<50} {stop_data['extId']}")
 
-    # Filter stops on arrival and departure v
-
     # Function to extract the stopname
+
     def get_stop_name(self, location):
         url_stopName = (
             f"https://api.resrobot.se/v2.1/location.name?input={location}"
@@ -91,9 +90,6 @@ class ResRobot:
         arrivals = data_arrivals.get("Arrival", [])
         return arrivals[:max_results]
 
-    # Filter stops on arrival and departure ^
-
-    # Filter one hour ahead v
     def get_departures_around_one_hour_ahead(self, stop_id):
         now = datetime.now()  # Hämtar tiden nu
         date = now.strftime("%Y-%m-%d")
@@ -126,12 +122,16 @@ class ResRobot:
 
     def get_station_ids(self, location1, location2):
         def fetch_station_id(location):
-            url = f"https://api.resrobot.se/v2.1/location.name?input={location}&format=json&accessId={self.API_KEY}"
+            url = (
+                f"https://api.resrobot.se/v2.1/location.name?"
+                f"input={location}&format=json&accessId={self.API_KEY}"
+            )
             response = requests.get(url)
 
             if response.status_code != 200:
                 print(
-                    f"Error: API request failed for {location} with status code {response.status_code}"
+                    f"Error: API request failed for {location}"
+                    f" with status code {response.status_code}"
                 )
                 return None
 
@@ -147,8 +147,6 @@ class ResRobot:
         station_id2 = fetch_station_id(location2)
 
         return station_id1, station_id2
-
-    # Filter one hour ahead ^
 
 
 if __name__ == "__main__":

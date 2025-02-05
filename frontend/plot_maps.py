@@ -81,8 +81,6 @@ class TripMap(Maps):
         return total_trip_time
 
     def display_map(self):
-        st.markdown("## Karta över stationerna i din resa")
-        st.markdown("Klicka på varje station för mer information.")
         st.components.v1.html(self._create_map()._repr_html_(), height=500)
 
         total_trip_time = self._calculate_total_trip_time()
@@ -100,4 +98,4 @@ class TripMap(Maps):
         col1.markdown(f"**⏳ Total restid:** {int(total_hours)}h {int(total_minutes)}m")
         col2.markdown(f"**🚆 Avgångstid:** {departure_time}")
         col3.markdown(f"**🏁 Ankomsttid:** {arrival_time}")
-        col4.markdown(f"Antal byten: {self.number_of_changes}")
+        col4.markdown(f"**Antal byten:** {self.number_of_changes}")

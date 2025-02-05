@@ -93,8 +93,11 @@ def main():
     page = st.sidebar.radio(label="", options=["Sök resa", "Karta"])
 
     if page == "Karta":
-        origin_id_name = st.text_input("FRÅN", "Göteborg C")
-        destination_id_name = st.text_input("TILL", "Stockholm C")
+        st.markdown("## Karta över stationerna i din resa")
+        st.markdown("Klicka på varje station för mer information.")
+
+        origin_id_name = st.text_input("FRÅN", "Göteborg")
+        destination_id_name = st.text_input("TILL", "Stockholm")
 
         station_id1, station_id2 = resrobot.get_station_ids(
             origin_id_name, destination_id_name
@@ -106,7 +109,7 @@ def main():
 
     elif page == "Sök resa":
         # Visar tabell med val av station
-        station_name = st.text_input("Ange stationsnamn:", "Göteborg C")
+        station_name = st.text_input("Ange stationsnamn:", "Göteborg")
 
         if station_name:
             print(f"Anropar get_stop_name med {station_name}")

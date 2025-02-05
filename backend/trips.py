@@ -30,9 +30,6 @@ class TripPlanner:
         Returns a DataFrame containing details of
         the next available trip, including stop names,
         coordinates, departure and arrival times, and dates.
-    next_available_trips_today() -> list[pd.DataFrame]
-        Returns a list of DataFrame objects, where each
-        DataFrame contains similar content as next_available_trip()
     """
 
     def __init__(self, origin_id, destination_id) -> None:
@@ -113,13 +110,6 @@ class TripPlanner:
             ]
         ]
 
-    def next_available_trips_today(self) -> list[pd.DataFrame]:
-        """Fetches all available trips today between the origin_id and destination_id
-        It returns a list of DataFrame objects, where each item corresponds to a trip
-        """
-
-        return []
-
     def count_changes(self) -> int:
         if not self.trips:
             return 0
@@ -133,8 +123,6 @@ class TripPlanner:
 class StopPlanner:
     def __init__(self, station) -> None:
         self.station = station
-
-        # Filter stops on arrival and departure v
 
     def get_timetable_dep(self, station):
         if station:
@@ -168,7 +156,9 @@ class StopPlanner:
                             dep_time = datetime.strptime(
                                 departure["time"], "%H:%M:%S"
                             ).time()
-                            current_time = datetime.now().time()
+                            current_time = (
+                                datetime.now() + timedelta(minutes=-1)
+                            ).time()
                             time_until_departure = datetime.combine(
                                 datetime.today(), dep_time
                             ) - datetime.combine(datetime.today(), current_time)
@@ -225,7 +215,9 @@ class StopPlanner:
                             arr_time = datetime.strptime(
                                 arrival["time"], "%H:%M:%S"
                             ).time()
-                            current_time = datetime.now().time()
+                            current_time = (
+                                datetime.now() + timedelta(minutes=-1)
+                            ).time()
                             time_until_arrival = datetime.combine(
                                 datetime.today(), arr_time
                             ) - datetime.combine(datetime.today(), current_time)
@@ -249,10 +241,6 @@ class StopPlanner:
         else:
             print("Stationen hittades inte")
             return pd.DataFrame()
-
-    # Filter stops on arrival and departure ^
-
-    # One hour ahead filter v
 
     def get_departures_around_one_hour_ahead(self, stop_id) -> pd.DataFrame:
         """
@@ -312,10 +300,3 @@ class StopPlanner:
         )
 
         return departures_filtered[["Tid", "Destination", "Transport"]]
-
-    # One hour ahead filter ^
-
-
-if __name__ == "__main__":
-    TripPlanner(740000190, 740000001)
-    StopPlanner()
