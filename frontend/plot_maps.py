@@ -32,6 +32,7 @@ class TripMap(Maps):
     def __init__(self, origin_id, destination_id):
         trip_planner = TripPlanner(origin_id, destination_id)
         self.next_trip = trip_planner.next_available_trip()
+        self.number_of_changes = trip_planner.count_changes()
 
     def _create_map(self):
         geographical_map = folium.Map(
@@ -69,3 +70,4 @@ class TripMap(Maps):
 
         total_trip_time = self._calculate_total_trip_time()
         st.markdown(f"**Total restid: {str(total_trip_time)}**")
+        st.markdown(f"**Antal byten: {self.number_of_changes}**")
