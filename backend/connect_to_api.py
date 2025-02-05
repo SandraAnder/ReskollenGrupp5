@@ -3,13 +3,14 @@ from datetime import datetime
 
 import pandas as pd
 import requests
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
 class ResRobot:
-    API_KEY = os.getenv("API_KEY")
+    API_KEY = st.secrets.get("API_KEY", os.getenv("API_KEY"))
 
     def trips(self, origin_id, destination_id):
         """origing_id and destination_id can be found from Stop lookup API"""
