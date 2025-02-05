@@ -93,9 +93,29 @@ class TripMap(Maps):
             self.last_stop["time"], format="%H:%M:%S"
         ).strftime("%H:%M")
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4 = st.columns([1, 1, 1, 1])  # Gör kolumnerna lika breda
 
-        col1.markdown(f"**⏳ Total restid:** {int(total_hours)}h {int(total_minutes)}m")
-        col2.markdown(f"**🚆 Avgångstid:** {departure_time}")
-        col3.markdown(f"**🏁 Ankomsttid:** {arrival_time}")
-        col4.markdown(f"**Antal byten:** {self.number_of_changes}")
+        with col1:
+            st.markdown(
+                f"<p class='trip-info'>⏳ Total restid: "
+                f"{int(total_hours)}h {int(total_minutes)}m</p>",
+                unsafe_allow_html=True,
+            )
+
+        with col2:
+            st.markdown(
+                f"<p class='trip-info'>🚆 Avgångstid: {departure_time}</p>",
+                unsafe_allow_html=True,
+            )
+
+        with col3:
+            st.markdown(
+                f"<p class='trip-info'>🏁 Ankomsttid: {arrival_time}</p>",
+                unsafe_allow_html=True,
+            )
+
+        with col4:
+            st.markdown(
+                f"<p class='trip-info'>🔄 Antal byten: {self.number_of_changes}</p>",
+                unsafe_allow_html=True,
+            )

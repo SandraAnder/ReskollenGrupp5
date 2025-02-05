@@ -76,10 +76,10 @@ def main():
     st.markdown(
         """
     <div class="header-container">
-        <h1>Reseplanerare</h1>
+        <h1>Reseplaneraren</h1>
         <p>
-            Denna dashboarden syftar till att utforska data för olika platser,
-            <br>men ska även fungera som en reseplanerare där du får välja och
+            Med denna dashboard ska du kunna söka resor genom att välja
+            <br>stationer och på så sätt få information för att
             planera din resa.
         </p>
     </div>
@@ -89,15 +89,22 @@ def main():
 
     # Skapar en meny i sidofältet till vänster
     st.sidebar.title("Meny")
-    st.sidebar.markdown("### Välj sida")
-    page = st.sidebar.radio(label="", options=["Sök resa", "Karta"])
+    page = st.sidebar.radio("", options=["Sök resa", "Karta"])
 
     if page == "Karta":
         st.markdown("## Karta över stationerna i din resa")
-        st.markdown("Klicka på varje station för mer information.")
+        st.markdown(
+            "<p>Klicka på varje station för mer information.</p>",
+            unsafe_allow_html=True,
+        )
 
-        origin_id_name = st.text_input("FRÅN", "Göteborg")
-        destination_id_name = st.text_input("TILL", "Stockholm")
+        col1, col2 = st.columns([2, 2])  # Skapa två kolumner
+
+        with col1:
+            origin_id_name = st.text_input("FRÅN", "Göteborg")
+
+        with col2:
+            destination_id_name = st.text_input("TILL", "Stockholm")
 
         station_id1, station_id2 = resrobot.get_station_ids(
             origin_id_name, destination_id_name

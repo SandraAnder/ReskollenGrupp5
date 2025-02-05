@@ -27,29 +27,13 @@
     --selectBoxColor: #ffffff;
 }
 
-/* Deploy och ovan del */
+/* Deployknapp och ovan del */
 .block-container {
     background-color: var(--backgroundColor);
 }
 header.stAppHeader {
     background-color: var(--backgroundColor);
     color: #c15e24 !important;
-}
-
-/* lobotomized owl - 
-selector looks for children of body with another sibling */
-/*body * + * {
-/*margin-top: var(0);
-/*    background-color: var(--backgroundColorsecondary);
-/*}
-
-/* finds selector on attribute level */
-[data-testid|="stheader"]{
-    display: box;
-    fill: #013151; 
-    color: #013151; 
-    opacity: 1; /* Ser till att ikonen är helt synlig */
-
 }
 
 h1, h2, h3 {
@@ -60,11 +44,13 @@ h1, h2, h3 {
 p {
     color: var(--paragraphColor);
     font-family: "Noto Sans", sans-serif;
+    font-weight: bold;
+    color: var(--paragraphColor);
 }
 
 h1 {
     font-size: calc(var(--s3) * 2); /* Ökar storleken på huvudrubriken */
-    color: var(--headingColor);
+    color: var(--headingColor); /* Färg */
     margin-top: 0rem; /* Justerar marginalen ovanför rubriken */
     margin-bottom: 1rem; /* Justerar marginalen under rubriken */
     text-align: center; /* Centrerar rubriken */
@@ -78,6 +64,11 @@ h2 {
     margin-bottom: 0.5rem; /* Justerar marginalen under underrubriken */
 }
 
+.header-container img {
+    max-width: 120px;
+    margin-bottom: 10px;
+}
+
 .header-container {
     display: flex;
     align-items: left;
@@ -89,11 +80,6 @@ h2 {
     box-shadow: none;
     margin-bottom: 1rem;
     text-align: center;
-}
-
-.header-container img {
-    max-width: 120px;
-    margin-bottom: 10px;
 }
 
 .header-container h1 {
@@ -118,7 +104,7 @@ h2 {
     background-image: url("https://static.vecteezy.com/ti/gratis-vektor/p1/14041676-metro-underjordisk-och-tunnelbana-rader-transport-karta-vector.jpg");
     background-size: cover;
     background-position: center bottom; /* Justerar bilden */
-    height: 400px; /* Anpassar höjd */
+    height: 350px; /* Anpassar höjd */
     width: 100%;
     margin-top: -100px; /* Minskar paddingen ovanför */
 }
@@ -142,42 +128,10 @@ h2 {
     opacity: 1; /* Minskar opaciteten */
 }
 
-
-/* Ändrar bakgrundsfärg och textfärg på selectboxar */
-div[data-baseweb="select"] > div {
-    background-color: var(--selectBoxColor); /* Bakgrundsfärg */
-    color: #013151; /* Textfärg */
-    border: 1px solid #003253; /* Kantfärg */
-    padding: 3px;
-    border-radius: 5px; /* Rundade hörn */
-    font-family: "Noto Sans", sans-serif;
-    font-size: 16px;
-    height: auto; /* anpassar sig till höjden*/
-    max-width: 300px;
-    width: auto; 
-    line-height: 1.5; 
-    display: flex; /* centrering av elementet */
-    align-items: center; /* Centrerar texten vertikalt */
-}
-
-div[data-baseweb="select"] > div > div {
-    color: #c15e24; /* Textfärg i selectboxen */
-}
-
-/* Ändrar utseendet när selectboxen är i fokus */
-div[data-baseweb="select"]:focus-within {
-    outline: none;
-    border: 1px solid #002550; /* Ändrar färg för kantlinjen vid fokus */
-    box-shadow: 0 0 5px #004088; /* En liten skuggeffekt vid fokus */
-    height: auto; /* anpassar sig till höjden*/
-    max-width: 300px;
-    width: auto;
-}
-
 /* Styling för textinput */
 div[data-testid="stTextInput"] {
     background-color: var(--selectBoxColor);
-    color: #5b2907; /* Textfärg */
+    color: #e66c1b; /* Textfärg */
     border: 2px solid #7871af;
     border-radius: 7px; /* Rundade hörn */
     padding: 5px; /* Ger tillräcklig inre marginal */
@@ -191,7 +145,7 @@ div[data-testid="stTextInput"] {
 /* Fokus-effekt */
 div[data-testid="stTextInput"]:focus-within {
     border: 2px solid #004088; /* Samma fokusfärg som selectbox */
-    box-shadow: 0 0 5px #004088; /* Ljusare skugga vid fokus */
+    box-shadow: 0 0 5px #0d5ab3; /* Ljusare skugga vid fokus */
 }
 /* Här ändras scrollbarhet i avgång en timma framåt */
 .scrollable-table {
@@ -210,7 +164,7 @@ div[data-testid="stTextInput"]:focus-within {
 .scrollable-table thead {
     position: sticky;
     top: 0;
-    background-color: #5764ac; /* Samma färg som din header */
+    background-color: #5764ac; /* Samma färg som headern */
     color: white;
     z-index: 2;
 }
@@ -229,10 +183,10 @@ div[data-testid="stTextInput"]:focus-within {
     text-align: left;
 }
 .styled-table thead th {
-    background-color: #5764ac; /* Justera till en ljusare färg om nödvändigt */
-    color: #ffffff; /* Gör texten vit */
+    background-color: #5764ac; /* Färg */
+    color: #ffffff; /* Vit text*/
     font-size: 1.1em; /* Gör texten lite större */
-    font-weight: bold; /* Lägg till fetstil för tydlighet */
+    font-weight: bold; /* Fetstil för tydlighet */
     text-align: left;
 }
 .styled-table tbody tr {
@@ -254,8 +208,8 @@ div[data-testid="stTextInput"]:focus-within {
     margin-top: 0 !important;  /* Tar bort övre marginal */
     padding-top: 0 !important; /* Tar bort eventuell övre padding */
 }
-.stRadio > div:first-child label {
-    display: none;  /* Gömmer den första labeln */
+.stRadio > label {
+    display: none !important /* Dölj standardrubriken för radioknappar */
 }
 
 #MainMenu {visibility: visible;} /* hamburger-menyn */
@@ -345,5 +299,11 @@ header {
 [data-testid="stSidebar"] > div:first-child {
     font-size: 1.2rem;
     font-weight: bold; /* Gör den fet för att särskilja från knapparna */
-    color: #2f3540; /* Ser till att titeln är kvar som ett blockelement */
+    color: #2f3540;
+}
+
+.trip-info {
+    text-align: center;  /* Centrerar texten */
+    font-size: 16px;
+    font-weight: bold;
 }
