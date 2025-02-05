@@ -90,7 +90,7 @@ class TripMap(Maps):
             self.last_stop["time"], format="%H:%M:%S"
         ).strftime("%H:%M")
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(4)
 
         col1.markdown(f"**⏳ Total restid:** {int(total_hours)}h {int(total_minutes)}m")
         col2.markdown(f"**🚆 Avgångstid:** {departure_time}")
