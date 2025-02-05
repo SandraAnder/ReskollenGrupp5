@@ -17,6 +17,8 @@ setup(
         "pprint",
         "python-dotenv",
     ],
-    packages=find_packages(exclude=["test*", "explorations"]),
+    packages=find_packages(
+        include=["backend", "frontend", "utils"], exclude=("test", "explorations")
+    ),
     entry_points={"console_scripts": ["dashboard = utils.run_dashboard:run_dashboard"]},
 )
